@@ -203,20 +203,22 @@ interface CalibRecord {
   category: '正产物' | '杂质' | '中间体'
 }
 
+// 取样分析记录：在线 GC 每隔 20min 自动取样，记录单体转化率、聚合物产量等关键指标
+// 这是茂金属聚合实验的标准在线监测数据格式
 const calibData: CalibRecord[] = [
-  { key: '1', seq: 1, id: 'PE-main', rt: 3.02, ara: 62.4, category: '正产物' },
-  { key: '2', seq: 2, id: 'PP-byp', rt: 3.87, ara: 8.1, category: '杂质' },
-  { key: '3', seq: 3, id: 'LLDPE-A', rt: 5.01, ara: 21.3, category: '正产物' },
-  { key: '4', seq: 4, id: 'Oligomer-1', rt: 5.92, ara: 3.6, category: '中间体' },
-  { key: '5', seq: 5, id: 'PE-HMW', rt: 7.03, ara: 4.2, category: '正产物' },
-  { key: '6', seq: 6, id: 'Unknown-1', rt: 7.88, ara: 0.4, category: '杂质' },
+  { key: '1', seq: 1, id: 'PP-主链信号', rt: 3.02, ara: 62.4, category: '正产物' },
+  { key: '2', seq: 2, id: '低聚物（C₆-C₁₂）', rt: 3.87, ara: 8.1, category: '杂质' },
+  { key: '3', seq: 3, id: 'PP-co-1-己烯', rt: 5.01, ara: 21.3, category: '正产物' },
+  { key: '4', seq: 4, id: '残余 1-己烯单体', rt: 5.92, ara: 3.6, category: '中间体' },
+  { key: '5', seq: 5, id: 'PP-高分子量尾峰', rt: 7.03, ara: 4.2, category: '正产物' },
+  { key: '6', seq: 6, id: '未知杂质峰', rt: 7.88, ara: 0.4, category: '杂质' },
 ]
 
 const calibColumns: ColumnsType<CalibRecord> = [
-  { title: '#', dataIndex: 'seq', width: 40, render: v => <span style={{ color: '#6b8aad', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v}</span> },
-  { title: '物质标识', dataIndex: 'id', render: v => <span style={{ color: '#00d4ff', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v}</span> },
-  { title: 'RT / min', dataIndex: 'rt', render: v => <span style={{ color: '#e8f4ff', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v.toFixed(2)}</span> },
-  { title: 'Ara %', dataIndex: 'ara', render: v => <span style={{ color: '#ffb800', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v.toFixed(1)}</span> },
+  { title: '取样序号', dataIndex: 'seq', width: 70, render: v => <span style={{ color: '#6b8aad', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v}</span> },
+  { title: '组分归属', dataIndex: 'id', render: v => <span style={{ color: '#00d4ff', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v}</span> },
+  { title: '保留时间 RT/min', dataIndex: 'rt', render: v => <span style={{ color: '#e8f4ff', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v.toFixed(2)}</span> },
+  { title: '峰面积占比 %', dataIndex: 'ara', render: v => <span style={{ color: '#ffb800', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{v.toFixed(1)}</span> },
   {
     title: '类别', dataIndex: 'category',
     render: v => {
@@ -464,7 +466,7 @@ export default function ProcessMonitor() {
       {/* ── 底部标定表格 ── */}
       <div style={{ ...glass, padding: '14px 16px' }}>
         <div style={{ color: '#e8f4ff', fontSize: 13, fontWeight: 600, marginBottom: 12 }}>
-          产物标定结果
+          在线 GC 取样分析记录
           <span style={{ color: '#6b8aad', fontSize: 11, fontWeight: 400, marginLeft: 8 }}>
             {selectedBatch} · {selectedReactor}
           </span>

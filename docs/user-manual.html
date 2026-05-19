@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CatalystOS 用户使用手册 v1.0</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080c18;
+      --bg2: #0d1225;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --cyan: #00d4ff;
+      --purple: #7b61ff;
+      --green: #00ff88;
+      --warn: #ffb800;
+      --danger: #ff4757;
+      --text: #e8f4ff;
+      --sub: #6b8aad;
+      --dim: #3d5168;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ── Sidebar TOC ── */
+    #toc {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 240px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 20px 0 40px;
+      z-index: 100;
+    }
+    #toc .toc-logo {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 16px 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+    #toc .toc-logo .logo-mark {
+      width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(135deg, #00d4ff, #7b61ff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+      box-shadow: 0 0 16px rgba(0,212,255,0.4);
+    }
+    #toc .toc-logo .logo-text { font-size: 13px; font-weight: 700; color: var(--text); }
+    #toc .toc-logo .logo-sub { font-size: 10px; color: var(--sub); margin-top: 1px; }
+    #toc .toc-section { padding: 6px 16px 2px; font-size: 10px; color: var(--dim); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    #toc a {
+      display: block; padding: 6px 16px 6px 24px;
+      color: var(--sub); text-decoration: none; font-size: 12.5px;
+      transition: all 0.15s; border-left: 2px solid transparent;
+    }
+    #toc a:hover { color: var(--cyan); background: rgba(0,212,255,0.06); border-left-color: var(--cyan); }
+    #toc a.l1 { padding-left: 16px; font-weight: 500; }
+    #toc a.l2 { padding-left: 28px; }
+
+    /* ── Main content ── */
+    #content {
+      margin-left: 240px;
+      padding: 0 0 80px;
+      max-width: 960px;
+    }
+
+    /* ── Cover ── */
+    #cover {
+      position: relative; overflow: hidden;
+      padding: 80px 60px 60px;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(0,212,255,0.06) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(123,97,255,0.05) 0%, transparent 60%),
+                  var(--bg);
+    }
+    #cover .cover-badge {
+      display: inline-block; padding: 3px 12px; border-radius: 20px;
+      background: rgba(0,212,255,0.12); border: 1px solid rgba(0,212,255,0.3);
+      color: var(--cyan); font-size: 11px; font-weight: 600; margin-bottom: 24px;
+    }
+    #cover h1 { font-size: 36px; font-weight: 800; color: var(--text); line-height: 1.2; }
+    #cover h1 span { color: var(--cyan); }
+    #cover .cover-sub { font-size: 16px; color: var(--sub); margin-top: 12px; }
+    #cover .cover-meta { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+    #cover .cover-meta-item { font-size: 12px; color: var(--dim); }
+    #cover .cover-meta-item strong { display: block; color: var(--sub); font-size: 13px; margin-bottom: 2px; }
+
+    /* ── Section containers ── */
+    .section {
+      padding: 48px 60px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    h2 {
+      font-size: 22px; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 24px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    h2 .h2-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(123,97,255,0.2));
+      border: 1px solid rgba(0,212,255,0.3);
+      font-size: 14px; font-weight: 700; color: var(--cyan);
+    }
+    h3 { font-size: 16px; font-weight: 600; color: var(--cyan); margin: 28px 0 12px; }
+    h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+
+    p { color: var(--sub); margin-bottom: 12px; }
+    p strong { color: var(--text); }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .mini-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .mini-card .mc-title { font-size: 12px; color: var(--sub); margin-bottom: 4px; }
+    .mini-card .mc-val { font-size: 18px; font-weight: 700; color: var(--cyan); }
+    .mini-card .mc-unit { font-size: 11px; color: var(--dim); margin-left: 4px; }
+
+    /* ── Tables ── */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+    th { background: rgba(0,212,255,0.08); color: var(--cyan); padding: 10px 14px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border); }
+    td { padding: 9px 14px; color: var(--sub); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* ── Badges ── */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .badge-cyan { background: rgba(0,212,255,0.15); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
+    .badge-green { background: rgba(0,255,136,0.12); color: var(--green); border: 1px solid rgba(0,255,136,0.3); }
+    .badge-warn { background: rgba(255,184,0,0.12); color: var(--warn); border: 1px solid rgba(255,184,0,0.3); }
+    .badge-danger { background: rgba(255,71,87,0.12); color: var(--danger); border: 1px solid rgba(255,71,87,0.3); }
+    .badge-purple { background: rgba(123,97,255,0.15); color: var(--purple); border: 1px solid rgba(123,97,255,0.3); }
+
+    /* ── Callout ── */
+    .callout {
+      display: flex; gap: 12px;
+      padding: 14px 16px; border-radius: 8px; margin: 16px 0;
+    }
+    .callout-info { background: rgba(0,212,255,0.06); border-left: 3px solid var(--cyan); }
+    .callout-warn { background: rgba(255,184,0,0.06); border-left: 3px solid var(--warn); }
+    .callout-danger { background: rgba(255,71,87,0.06); border-left: 3px solid var(--danger); }
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { font-size: 13px; color: var(--sub); }
+    .callout-body strong { color: var(--text); display: block; margin-bottom: 2px; }
+
+    /* ── Code block ── */
+    .code-block {
+      background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 12px; color: #a8c7e8; overflow-x: auto; margin: 12px 0;
+    }
+    .code-block .kw { color: var(--purple); }
+    .code-block .str { color: var(--green); }
+    .code-block .num { color: var(--cyan); }
+
+    /* ── FAQ ── */
+    .faq-item { margin-bottom: 16px; }
+    .faq-q {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      padding: 12px 16px; border-radius: 8px 8px 0 0;
+      background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.15);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .faq-q::before { content: 'Q'; color: var(--cyan); font-weight: 800; font-size: 14px; }
+    .faq-a {
+      font-size: 13px; color: var(--sub);
+      padding: 12px 16px;
+      background: var(--card); border: 1px solid var(--border); border-top: none;
+      border-radius: 0 0 8px 8px;
+    }
+    .faq-a::before { content: 'A  '; color: var(--green); font-weight: 800; }
+
+    /* ── SVG containers ── */
+    .svg-container {
+      background: rgba(0,0,0,0.2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .svg-title {
+      font-size: 12px; color: var(--sub); text-align: center;
+      margin-top: 10px; font-style: italic;
+    }
+
+    /* ── Step flow ── */
+    .steps { display: flex; gap: 0; align-items: center; flex-wrap: wrap; margin: 20px 0; }
+    .step {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px; min-width: 100px;
+      text-align: center; flex-shrink: 0;
+    }
+    .step .step-num { font-size: 10px; color: var(--cyan); font-weight: 700; }
+    .step .step-label { font-size: 12px; color: var(--text); margin-top: 4px; }
+    .step-arrow { color: var(--dim); font-size: 18px; padding: 0 6px; flex-shrink: 0; }
+
+    /* ── Node type table color dots ── */
+    .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+    @media print {
+      #toc { display: none; }
+      #content { margin-left: 0; }
+      .section { page-break-inside: avoid; }
+    }
+    @media (max-width: 768px) {
+      #toc { display: none; }
+      #content { margin-left: 0; }
+      .section { padding: 32px 24px; }
+      #cover { padding: 48px 24px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════ SIDEBAR TOC ═══════════════ -->
+<nav id="toc">
+  <div class="toc-logo">
+    <div class="logo-mark">C</div>
+    <div>
+      <div class="logo-text">CatalystOS</div>
+      <div class="logo-sub">用户使用手册 v1.0</div>
+    </div>
+  </div>
+
+  <div class="toc-section">概述</div>
+  <a href="#cover" class="l1">封面</a>
+  <a href="#sec-overview" class="l1">1. 平台概述</a>
+  <a href="#sec-arch" class="l2">1.1 系统架构</a>
+  <a href="#sec-modules" class="l2">1.2 核心模块</a>
+
+  <div class="toc-section">快速开始</div>
+  <a href="#sec-quickstart" class="l1">2. 快速开始</a>
+  <a href="#sec-roles" class="l2">2.1 权限角色</a>
+  <a href="#sec-nav" class="l2">2.2 界面导航</a>
+  <a href="#sec-demo" class="l2">2.3 演示路径</a>
+
+  <div class="toc-section">核心功能</div>
+  <a href="#sec-ai" class="l1">3.1 AI 方案推荐</a>
+  <a href="#sec-orch" class="l1">3.2 实验方案编排</a>
+  <a href="#sec-monitor" class="l1">3.3 反应过程监控</a>
+  <a href="#sec-analysis" class="l1">3.4 谱图分析仪器</a>
+  <a href="#sec-catdb" class="l1">3.5 催化剂数据库</a>
+  <a href="#sec-scheduling" class="l1">3.6 高通量智能排产</a>
+  <a href="#sec-al" class="l1">3.7 主动学习迭代</a>
+
+  <div class="toc-section">设备控制</div>
+  <a href="#sec-devices" class="l1">4. 设备控制</a>
+
+  <div class="toc-section">合规报告</div>
+  <a href="#sec-reports" class="l1">5. 报告与审计</a>
+
+  <div class="toc-section">支持</div>
+  <a href="#sec-faq" class="l1">6. 常见问题</a>
+  <a href="#sec-appendix" class="l1">附录</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════ MAIN CONTENT ════════════════ -->
+<main id="content">
+
+<!-- ── COVER ── -->
+<section id="cover">
+  <!-- Decorative SVG -->
+  <svg style="position:absolute;right:40px;top:30px;opacity:0.15" width="320" height="260" viewBox="0 0 320 260">
+    <defs>
+      <radialGradient id="grd1" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.8"/>
+        <stop offset="100%" stop-color="#7b61ff" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <!-- Molecular network decoration -->
+    <circle cx="160" cy="130" r="80" fill="none" stroke="#00d4ff" stroke-width="0.5" stroke-dasharray="4 6"/>
+    <circle cx="160" cy="130" r="50" fill="none" stroke="#7b61ff" stroke-width="0.5" stroke-dasharray="3 5"/>
+    <!-- Nodes -->
+    <circle cx="160" cy="50" r="5" fill="#00d4ff" opacity="0.8"/>
+    <circle cx="230" cy="100" r="4" fill="#7b61ff" opacity="0.7"/>
+    <circle cx="220" cy="180" r="5" fill="#00d4ff" opacity="0.7"/>
+    <circle cx="130" cy="200" r="4" fill="#00ff88" opacity="0.6"/>
+    <circle cx="80" cy="150" r="5" fill="#7b61ff" opacity="0.8"/>
+    <circle cx="90" cy="80" r="4" fill="#00d4ff" opacity="0.7"/>
+    <circle cx="160" cy="130" r="8" fill="url(#grd1)"/>
+    <!-- Connections -->
+    <line x1="160" y1="130" x2="160" y2="50" stroke="#00d4ff" stroke-width="0.8" opacity="0.5"/>
+    <line x1="160" y1="130" x2="230" y2="100" stroke="#7b61ff" stroke-width="0.8" opacity="0.5"/>
+    <line x1="160" y1="130" x2="220" y2="180" stroke="#00d4ff" stroke-width="0.8" opacity="0.5"/>
+    <line x1="160" y1="130" x2="130" y2="200" stroke="#00ff88" stroke-width="0.8" opacity="0.4"/>
+    <line x1="160" y1="130" x2="80" y2="150" stroke="#7b61ff" stroke-width="0.8" opacity="0.5"/>
+    <line x1="160" y1="130" x2="90" y2="80" stroke="#00d4ff" stroke-width="0.8" opacity="0.5"/>
+    <!-- Secondary connections -->
+    <line x1="160" y1="50" x2="90" y2="80" stroke="#00d4ff" stroke-width="0.4" opacity="0.3"/>
+    <line x1="230" y1="100" x2="220" y2="180" stroke="#7b61ff" stroke-width="0.4" opacity="0.3"/>
+    <line x1="80" y1="150" x2="130" y2="200" stroke="#00ff88" stroke-width="0.4" opacity="0.3"/>
+    <!-- Circuit lines -->
+    <path d="M40 20 L80 20 L80 40" stroke="#00d4ff" stroke-width="0.5" fill="none" opacity="0.4"/>
+    <path d="M270 240 L270 210 L290 210" stroke="#7b61ff" stroke-width="0.5" fill="none" opacity="0.4"/>
+    <circle cx="40" cy="20" r="2" fill="#00d4ff" opacity="0.4"/>
+    <circle cx="290" cy="210" r="2" fill="#7b61ff" opacity="0.4"/>
+  </svg>
+
+  <div class="cover-badge">AI 驱动 · 茂金属催化 · 智能实验室</div>
+  <h1>Catalyst<span>OS</span><br>用户使用手册</h1>
+  <div class="cover-sub">AI 驱动的茂金属催化剂智能实验室平台 — 完整操作指南</div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item"><strong>文档版本</strong>v1.0.0</div>
+    <div class="cover-meta-item"><strong>发布日期</strong>2026-05-18</div>
+    <div class="cover-meta-item"><strong>适用版本</strong>CatalystOS 2.x</div>
+    <div class="cover-meta-item"><strong>文档状态</strong><span class="badge badge-green">正式发布</span></div>
+  </div>
+</section>
+
+<!-- ═══ 1. PLATFORM OVERVIEW ═══ -->
+<section id="sec-overview" class="section">
+  <h2><span class="h2-num">1</span>平台概述</h2>
+  <p>CatalystOS 是面向科研机构与精细化工企业的 <strong>新一代 AI 实验室操作系统</strong>，专为茂金属（Metallocene）催化剂体系的研发工作流设计。平台整合设备自动化控制、在线分析表征、AI 方案推荐与主动学习迭代，将传统 "假设-实验-分析" 串行研发模式升级为 "数据驱动-并行高通量-持续进化" 的智能研发范式。</p>
+
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fill, minmax(160px,1fr));">
+    <div class="mini-card">
+      <div class="mc-title">实验加速倍率</div>
+      <div class="mc-val">8<span class="mc-unit">×</span></div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">数据重用率</div>
+      <div class="mc-val">94<span class="mc-unit">%</span></div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">方案推荐准确率</div>
+      <div class="mc-val">≥87<span class="mc-unit">%</span></div>
+    </div>
+    <div class="mini-card">
+      <div class="mc-title">支持催化剂体系</div>
+      <div class="mc-val">200<span class="mc-unit">+</span></div>
+    </div>
+  </div>
+
+  <h3 id="sec-arch">1.1 系统架构</h3>
+  <div class="svg-container">
+    <svg width="100%" height="220" viewBox="0 0 760 220">
+      <defs>
+        <linearGradient id="lyr1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="lyr2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7b61ff" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#7b61ff" stop-opacity="0.05"/>
+        </linearGradient>
+        <linearGradient id="lyr3" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00ff88" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#00ff88" stop-opacity="0.04"/>
+        </linearGradient>
+        <linearGradient id="lyr4" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#ffb800" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#ffb800" stop-opacity="0.04"/>
+        </linearGradient>
+      </defs>
+      <!-- Layer 4: Visualization -->
+      <rect x="0" y="0" width="760" height="46" rx="8" fill="url(#lyr4)" stroke="rgba(255,184,0,0.2)" stroke-width="1"/>
+      <text x="12" y="14" fill="#ffb800" font-size="10" font-weight="600">可视化层</text>
+      <text x="80" y="28" fill="#6b8aad" font-size="11">首页大屏</text>
+      <text x="165" y="28" fill="#6b8aad" font-size="11">过程监控</text>
+      <text x="255" y="28" fill="#6b8aad" font-size="11">谱图分析</text>
+      <text x="345" y="28" fill="#6b8aad" font-size="11">Gantt 排产</text>
+      <text x="445" y="28" fill="#6b8aad" font-size="11">拓扑总览</text>
+      <text x="540" y="28" fill="#6b8aad" font-size="11">实验报告</text>
+      <text x="630" y="28" fill="#6b8aad" font-size="11">审计日志</text>
+
+      <!-- Layer 3: AI Engine -->
+      <rect x="0" y="54" width="760" height="46" rx="8" fill="url(#lyr2)" stroke="rgba(123,97,255,0.2)" stroke-width="1"/>
+      <text x="12" y="68" fill="#7b61ff" font-size="10" font-weight="600">AI 引擎层</text>
+      <text x="80" y="82" fill="#6b8aad" font-size="11">贝叶斯优化 GPR</text>
+      <text x="225" y="82" fill="#6b8aad" font-size="11">SHAP 可解释性</text>
+      <text x="370" y="82" fill="#6b8aad" font-size="11">主动学习迭代</text>
+      <text x="510" y="82" fill="#6b8aad" font-size="11">Job-Shop 调度算法</text>
+      <text x="660" y="82" fill="#6b8aad" font-size="11">预测模型</text>
+
+      <!-- Layer 2: Data -->
+      <rect x="0" y="108" width="760" height="46" rx="8" fill="url(#lyr3)" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+      <text x="12" y="122" fill="#00ff88" font-size="10" font-weight="600">数据层</text>
+      <text x="80" y="136" fill="#6b8aad" font-size="11">催化剂数据库</text>
+      <text x="215" y="136" fill="#6b8aad" font-size="11">物化参数库</text>
+      <text x="340" y="136" fill="#6b8aad" font-size="11">实验记录库</text>
+      <text x="465" y="136" fill="#6b8aad" font-size="11">表征数据仓</text>
+      <text x="590" y="136" fill="#6b8aad" font-size="11">操作审计流水</text>
+
+      <!-- Layer 1: Device -->
+      <rect x="0" y="162" width="760" height="46" rx="8" fill="url(#lyr1)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+      <text x="12" y="176" fill="#00d4ff" font-size="10" font-weight="600">设备接入层</text>
+      <text x="80" y="190" fill="#6b8aad" font-size="11">高压反应釜 × 16</text>
+      <text x="230" y="190" fill="#6b8aad" font-size="11">在线 GC 色谱仪</text>
+      <text x="375" y="190" fill="#6b8aad" font-size="11">AGV 机器人 × 4</text>
+      <text x="510" y="190" fill="#6b8aad" font-size="11">GPC / DSC / NMR / FTIR</text>
+      <text x="680" y="190" fill="#6b8aad" font-size="11">PLC 控制</text>
+
+      <!-- Arrows between layers (small) -->
+      <text x="375" y="52" fill="#3d5168" font-size="10" text-anchor="middle">↑ 实时推送</text>
+      <text x="375" y="106" fill="#3d5168" font-size="10" text-anchor="middle">↑ 数据服务</text>
+      <text x="375" y="160" fill="#3d5168" font-size="10" text-anchor="middle">↑ OPC-UA / MQTT</text>
+    </svg>
+    <div class="svg-title">图 1-1 CatalystOS 四层系统架构</div>
+  </div>
+
+  <h3 id="sec-modules">1.2 核心功能模块</h3>
+  <div class="card-grid">
+    <div class="mini-card"><div class="mc-title">🏠 首页大屏</div><div style="font-size:12px;color:var(--sub);margin-top:6px">KPI 总览、实时告警、活跃实验状态</div></div>
+    <div class="mini-card"><div class="mc-title">🤖 AI 方案推荐</div><div style="font-size:12px;color:var(--sub);margin-top:6px">贝叶斯优化 + SHAP 可解释性</div></div>
+    <div class="mini-card"><div class="mc-title">🔀 实验方案编排</div><div style="font-size:12px;color:var(--sub);margin-top:6px">低代码拖拽流程设计，模板库</div></div>
+    <div class="mini-card"><div class="mc-title">📈 反应过程监控</div><div style="font-size:12px;color:var(--sub);margin-top:6px">实时温压曲线 + 在线 GC 分析</div></div>
+    <div class="mini-card"><div class="mc-title">⚡ 高通量智能排产</div><div style="font-size:12px;color:var(--sub);margin-top:6px">AI Gantt 排产，自动冲突处理</div></div>
+    <div class="mini-card"><div class="mc-title">🧬 主动学习迭代</div><div style="font-size:12px;color:var(--sub);margin-top:6px">每轮实验数据反哺模型，收敛曲线</div></div>
+    <div class="mini-card"><div class="mc-title">🔬 催化剂数据库</div><div style="font-size:12px;color:var(--sub);margin-top:6px">200+ 茂金属体系，结构相似性搜索</div></div>
+    <div class="mini-card"><div class="mc-title">📊 谱图分析</div><div style="font-size:12px;color:var(--sub);margin-top:6px">GPC/DSC/¹³C NMR/FTIR 谱图展示</div></div>
+    <div class="mini-card"><div class="mc-title">🚗 AGV 调度</div><div style="font-size:12px;color:var(--sub);margin-top:6px">实验室机器人实时路径规划</div></div>
+    <div class="mini-card"><div class="mc-title">🔔 告警与联锁</div><div style="font-size:12px;color:var(--sub);margin-top:6px">三级告警，自动联锁保护</div></div>
+    <div class="mini-card"><div class="mc-title">📦 物料管理</div><div style="font-size:12px;color:var(--sub);margin-top:6px">库存预警、出入库追踪</div></div>
+    <div class="mini-card"><div class="mc-title">📋 报告 & 审计</div><div style="font-size:12px;color:var(--sub);margin-top:6px">自动报告生成，防篡改审计日志</div></div>
+  </div>
+</section>
+
+<!-- ═══ 2. QUICK START ═══ -->
+<section id="sec-quickstart" class="section">
+  <h2><span class="h2-num">2</span>快速开始</h2>
+
+  <h3 id="sec-roles">2.1 权限角色说明</h3>
+  <table>
+    <thead>
+      <tr><th>角色</th><th>说明</th><th>主要权限</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-danger">系统管理员</span></td>
+        <td>负责平台运维、用户管理、系统配置</td>
+        <td>全模块读写 + 用户权限管理 + 系统设置</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-cyan">实验科学家</span></td>
+        <td>日常研发主力用户，负责实验设计与数据分析</td>
+        <td>实验中台全功能 + AI 推荐 + 数据分析 + 报告导出</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">设备工程师</span></td>
+        <td>负责设备维护、标定、联锁配置</td>
+        <td>设备控制全模块 + 告警管理 + 数据采集配置</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-purple">只读访客</span></td>
+        <td>参观/汇报场景，仅限查看数据</td>
+        <td>首页大屏 + 数据大屏（只读）</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec-nav">2.2 界面导航说明</h3>
+
+  <!-- Navigation SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="300" viewBox="0 0 760 300">
+      <!-- Sidebar -->
+      <rect x="0" y="0" width="140" height="300" rx="0" fill="rgba(13,18,37,0.8)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Logo area -->
+      <rect x="8" y="8" width="24" height="24" rx="5" fill="url(#grd1)"/>
+      <text x="20" y="24" fill="white" font-size="11" font-weight="700" text-anchor="middle">C</text>
+      <text x="40" y="18" fill="#e8f4ff" font-size="10" font-weight="700">CatalystOS</text>
+      <text x="40" y="29" fill="#6b8aad" font-size="8">AI 实验室平台</text>
+      <!-- Menu items -->
+      <rect x="4" y="44" width="132" height="20" rx="4" fill="rgba(0,212,255,0.12)" stroke="rgba(0,212,255,0.3)" stroke-width="0.5"/>
+      <text x="12" y="57" fill="#00d4ff" font-size="10">🏠 首页大屏</text>
+      <text x="8" y="76" fill="#3d5168" font-size="8" font-weight="600">设备控制</text>
+      <text x="12" y="90" fill="#6b8aad" font-size="10">⚙ 设备拓扑总览</text>
+      <text x="12" y="104" fill="#6b8aad" font-size="10">🚗 AGV 调度控制</text>
+      <text x="12" y="118" fill="#6b8aad" font-size="10">🔔 告警与联锁</text>
+      <text x="8" y="134" fill="#3d5168" font-size="8" font-weight="600">实验中台</text>
+      <text x="12" y="148" fill="#6b8aad" font-size="10">📈 反应过程监控</text>
+      <text x="12" y="162" fill="#6b8aad" font-size="10">🔀 实验方案编排</text>
+      <text x="12" y="176" fill="#6b8aad" font-size="10">📋 实验任务调度</text>
+      <text x="12" y="190" fill="#6b8aad" font-size="10">⚡ 高通量智能排产</text>
+      <text x="8" y="206" fill="#3d5168" font-size="8" font-weight="600">AI 智能中心</text>
+      <text x="12" y="220" fill="#6b8aad" font-size="10">🤖 实验方案推荐</text>
+      <text x="12" y="234" fill="#6b8aad" font-size="10">📊 预测模型管理</text>
+      <text x="12" y="248" fill="#6b8aad" font-size="10">🧬 主动学习迭代</text>
+
+      <!-- Main area -->
+      <rect x="142" y="0" width="618" height="300" rx="0" fill="rgba(8,12,24,0.5)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+      <!-- Top bar -->
+      <rect x="142" y="0" width="618" height="36" rx="0" fill="rgba(13,18,37,0.9)"/>
+      <text x="660" y="22" fill="#00ff88" font-size="9">● 系统正常</text>
+      <text x="700" y="22" fill="#6b8aad" font-size="9">2026-05-18 14:23</text>
+
+      <!-- KPI cards -->
+      <rect x="154" y="44" width="100" height="50" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="162" y="60" fill="#6b8aad" font-size="9">今日实验批次</text>
+      <text x="162" y="82" fill="#00d4ff" font-size="22" font-weight="700">24</text>
+
+      <rect x="264" y="44" width="100" height="50" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="272" y="60" fill="#6b8aad" font-size="9">活跃实验任务</text>
+      <text x="272" y="82" fill="#00ff88" font-size="22" font-weight="700">8</text>
+
+      <rect x="374" y="44" width="100" height="50" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="382" y="60" fill="#6b8aad" font-size="9">当前最高活性</text>
+      <text x="382" y="82" fill="#7b61ff" font-size="22" font-weight="700">9240</text>
+
+      <rect x="484" y="44" width="100" height="50" rx="6" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="492" y="60" fill="#6b8aad" font-size="9">今日告警次数</text>
+      <text x="492" y="82" fill="#ffb800" font-size="22" font-weight="700">2</text>
+
+      <!-- Chart placeholder -->
+      <rect x="154" y="108" width="380" height="170" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <text x="344" y="170" fill="#3d5168" font-size="11" text-anchor="middle">实时温压折线图</text>
+      <!-- Fake chart lines -->
+      <polyline points="170,260 200,245 230,230 260,235 290,215 320,210 350,205 380,200 410,210 440,215 470,220 500,218 520,212" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.7"/>
+      <polyline points="170,265 200,260 230,250 260,245 290,240 320,235 350,230 380,228 410,230 440,235 470,238 500,235 520,232" fill="none" stroke="#7b61ff" stroke-width="1" opacity="0.5"/>
+
+      <!-- Side panel -->
+      <rect x="546" y="108" width="202" height="170" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <text x="554" y="126" fill="#6b8aad" font-size="10">在线 GC 分析记录</text>
+      <text x="554" y="145" fill="#3d5168" font-size="9">组分归属</text>
+      <text x="640" y="145" fill="#3d5168" font-size="9">峰面积 %</text>
+      <text x="554" y="160" fill="#6b8aad" font-size="9">PP-主链信号</text>
+      <text x="640" y="160" fill="#00d4ff" font-size="9">82.4</text>
+      <text x="554" y="175" fill="#6b8aad" font-size="9">PP-co-1-己烯</text>
+      <text x="640" y="175" fill="#00d4ff" font-size="9">11.7</text>
+      <text x="554" y="190" fill="#6b8aad" font-size="9">低聚物 C₆-C₁₂</text>
+      <text x="640" y="190" font-size="9" fill="#00d4ff">3.2</text>
+      <text x="554" y="205" fill="#6b8aad" font-size="9">残余 1-己烯单体</text>
+      <text x="640" y="205" fill="#ffb800" font-size="9">2.7</text>
+
+      <!-- Annotation arrows -->
+      <line x1="142" y1="35" x2="200" y2="35" stroke="rgba(255,184,0,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="148" y="48" fill="#ffb800" font-size="8">① 顶部状态栏</text>
+
+      <line x1="70" y1="40" x2="4" y2="40" stroke="rgba(0,212,255,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+      <text x="0" y="38" fill="#00d4ff" font-size="7">② 侧</text>
+      <text x="0" y="47" fill="#00d4ff" font-size="7">边导</text>
+      <text x="0" y="56" fill="#00d4ff" font-size="7">航栏</text>
+    </svg>
+    <div class="svg-title">图 2-1 CatalystOS 主界面布局说明</div>
+  </div>
+
+  <p><strong>① 侧边导航栏</strong>：按功能域分组，点击 Logo 可折叠/展开。活跃菜单项显示青蓝色左侧指示条。</p>
+  <p><strong>② 顶部状态栏</strong>：显示系统健康状态、实时时钟、告警通知入口。</p>
+  <p><strong>③ 主内容区</strong>：每个功能页面的主体，支持自适应宽度布局。</p>
+
+  <h3 id="sec-demo">2.3 10 分钟演示路径</h3>
+
+  <div class="steps">
+    <div class="step"><div class="step-num">STEP 1</div><div class="step-label">AI 推荐<br>实验方案</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 2</div><div class="step-label">编排<br>实验流程</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 3</div><div class="step-label">任务调度<br>排产</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 4</div><div class="step-label">AGV<br>备料取样</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 5</div><div class="step-label">反应过程<br>实时监控</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 6</div><div class="step-label">表征数据<br>谱图分析</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 7</div><div class="step-label">数据反哺<br>模型更新</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">STEP 8</div><div class="step-label">自动生成<br>实验报告</div></div>
+  </div>
+  <p>按照以上 8 步流程完整走一遍，可在 10 分钟内体验 CatalystOS 全链路核心功能。建议从 <strong>AI 智能中心 → 实验方案推荐</strong> 开始。</p>
+</section>
+
+<!-- ═══ 3.1 AI RECOMMENDATION ═══ -->
+<section id="sec-ai" class="section">
+  <h2><span class="h2-num">3.1</span>AI 实验方案推荐</h2>
+
+  <p>AI 实验方案推荐模块基于 <strong>贝叶斯优化（Bayesian Optimization）</strong> 框架，以高斯过程回归（GPR）为代理模型，持续在实验参数空间中寻找最优催化剂组合。</p>
+
+  <h3>贝叶斯优化工作原理</h3>
+  <div class="card">
+    <p>传统网格搜索需要穷举所有参数组合，而贝叶斯优化每轮只做少量实验，用代理模型预测未探索区域的期望收益（EI，Expected Improvement），优先在"最可能高活性"的参数点做实验。通常 20~50 次实验即可逼近最优区间。</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div style="padding:12px;background:rgba(0,0,0,0.2);border-radius:6px;">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:4px;">传统网格搜索</div>
+        <div style="font-size:13px;color:var(--danger);">5×5×5 = <strong style="color:var(--danger)">125 次实验</strong></div>
+        <div style="font-size:11px;color:var(--dim);">覆盖所有参数点</div>
+      </div>
+      <div style="padding:12px;background:rgba(0,0,0,0.2);border-radius:6px;">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:4px;">贝叶斯优化</div>
+        <div style="font-size:13px;color:var(--green);"><strong style="color:var(--green)">20~30 次实验</strong></div>
+        <div style="font-size:11px;color:var(--dim);">达到 90%+ 最优效果</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>SHAP 可解释性分析</h3>
+  <p>每条推荐方案都附带 SHAP（SHapley Additive exPlanations）特征重要性图，直观显示每个参数（Al/Zr 摩尔比、温度、压力、溶剂极性等）对预测活性的正负贡献量。</p>
+
+  <!-- SHAP chart SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="200" viewBox="0 0 600 200">
+      <text x="10" y="18" fill="#6b8aad" font-size="11" font-weight="600">SHAP 特征贡献值（正值=活性提升，负值=活性抑制）</text>
+      <!-- Bars -->
+      <!-- Al/Zr 比 -->
+      <text x="120" y="48" fill="#6b8aad" font-size="11" text-anchor="end">Al/Zr 摩尔比</text>
+      <rect x="125" y="36" width="180" height="18" rx="3" fill="rgba(0,212,255,0.7)"/>
+      <text x="312" y="48" fill="#00d4ff" font-size="11">+2840</text>
+
+      <!-- Temperature -->
+      <text x="120" y="74" fill="#6b8aad" font-size="11" text-anchor="end">聚合温度 (°C)</text>
+      <rect x="125" y="62" width="120" height="18" rx="3" fill="rgba(0,212,255,0.5)"/>
+      <text x="252" y="74" fill="#00d4ff" font-size="11">+1650</text>
+
+      <!-- Ligand type -->
+      <text x="120" y="100" fill="#6b8aad" font-size="11" text-anchor="end">配体类型</text>
+      <rect x="125" y="88" width="90" height="18" rx="3" fill="rgba(123,97,255,0.6)"/>
+      <text x="222" y="100" fill="#7b61ff" font-size="11">+1120</text>
+
+      <!-- Pressure -->
+      <text x="120" y="126" fill="#6b8aad" font-size="11" text-anchor="end">单体分压 (bar)</text>
+      <rect x="125" y="114" width="55" height="18" rx="3" fill="rgba(123,97,255,0.4)"/>
+      <text x="187" y="126" fill="#7b61ff" font-size="11">+680</text>
+
+      <!-- Solvent -->
+      <text x="120" y="152" fill="#6b8aad" font-size="11" text-anchor="end">溶剂极性</text>
+      <rect x="75" y="140" width="48" height="18" rx="3" fill="rgba(255,71,87,0.5)"/>
+      <text x="70" y="152" fill="#ff4757" font-size="11" text-anchor="end">-560</text>
+
+      <!-- Cocatalyst -->
+      <text x="120" y="178" fill="#6b8aad" font-size="11" text-anchor="end">助催化剂用量</text>
+      <rect x="85" y="166" width="38" height="18" rx="3" fill="rgba(255,71,87,0.4)"/>
+      <text x="80" y="178" fill="#ff4757" font-size="11" text-anchor="end">-410</text>
+
+      <!-- Zero line -->
+      <line x1="125" y1="28" x2="125" y2="188" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+      <text x="125" y="196" fill="#3d5168" font-size="9" text-anchor="middle">0</text>
+    </svg>
+    <div class="svg-title">图 3.1-1 SHAP 特征贡献条形图示意（蓝=正向贡献，红=负向贡献）</div>
+  </div>
+
+  <h3>人机协同审核流程</h3>
+  <div class="steps">
+    <div class="step"><div class="step-num">AI生成</div><div class="step-label">贝叶斯<br>生成候选</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">科学家</div><div class="step-label">查看 SHAP<br>分析</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">决策</div><div class="step-label">同意 / 修改<br>/ 驳回</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">执行</div><div class="step-label">转为实验<br>工单</div></div>
+    <div class="step-arrow">→</div>
+    <div class="step"><div class="step-num">反馈</div><div class="step-label">结果数据<br>反哺模型</div></div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>最佳实践</strong>即使 AI 推荐置信度很高，建议科学家至少查看 SHAP 图中的负向特征，确认是否存在已知的工艺约束被忽略。平台提供"修改参数后重新预测"功能，无需完整重跑优化。</div>
+  </div>
+</section>
+
+<!-- ═══ 3.2 ORCHESTRATION ═══ -->
+<section id="sec-orch" class="section">
+  <h2><span class="h2-num">3.2</span>实验方案编排</h2>
+
+  <p>实验方案编排页提供低代码、拖拽式流程设计画布，基于 <strong>ReactFlow</strong> 实现节点连线逻辑，支持从模板库快速创建实验方案骨架后进行个性化修改。</p>
+
+  <h3>节点类型说明</h3>
+  <table>
+    <thead><tr><th>节点类型</th><th>颜色</th><th>用途说明</th><th>示例</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:#00d4ff"></span>起始节点</td><td><span class="badge badge-cyan">青蓝</span></td><td>实验流程的唯一入口</td><td>实验开始触发</td></tr>
+      <tr><td><span class="dot" style="background:#7b61ff"></span>取样节点</td><td><span class="badge badge-purple">紫色</span></td><td>AGV 执行取样操作</td><td>在线 GC 进样</td></tr>
+      <tr><td><span class="dot" style="background:#00ff88"></span>反应节点</td><td><span class="badge badge-green">绿色</span></td><td>反应釜执行聚合操作</td><td>丙烯聚合 60min</td></tr>
+      <tr><td><span class="dot" style="background:#ffb800"></span>判断节点</td><td><span class="badge badge-warn">橙色</span></td><td>条件分支，根据中间数据决定走向</td><td>转化率 > 80% ?</td></tr>
+      <tr><td><span class="dot" style="background:#00d4ff"></span>分析节点</td><td><span class="badge badge-cyan">青蓝</span></td><td>表征仪器任务下发</td><td>GPC 分子量测定</td></tr>
+      <tr><td><span class="dot" style="background:#ff4757"></span>联锁节点</td><td><span class="badge badge-danger">红色</span></td><td>安全联锁触发时执行的响应动作</td><td>紧急停料</td></tr>
+      <tr><td><span class="dot" style="background:#6b8aad"></span>等待节点</td><td>灰色</td><td>等待外部事件或手动确认</td><td>等待 QC 批准</td></tr>
+      <tr><td><span class="dot" style="background:#3d5168"></span>结束节点</td><td>深灰</td><td>实验流程的终止节点</td><td>实验完成归档</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Flow diagram SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="200" viewBox="0 0 700 200">
+      <!-- Nodes -->
+      <rect x="10" y="85" width="70" height="30" rx="15" fill="rgba(0,212,255,0.2)" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="45" y="103" fill="#00d4ff" font-size="10" text-anchor="middle" font-weight="600">开始</text>
+
+      <rect x="110" y="80" width="80" height="40" rx="6" fill="rgba(0,255,136,0.12)" stroke="#00ff88" stroke-width="1.5"/>
+      <text x="150" y="96" fill="#00ff88" font-size="10" text-anchor="middle">催化剂</text>
+      <text x="150" y="110" fill="#00ff88" font-size="10" text-anchor="middle">溶解活化</text>
+
+      <rect x="220" y="80" width="80" height="40" rx="6" fill="rgba(0,255,136,0.12)" stroke="#00ff88" stroke-width="1.5"/>
+      <text x="260" y="96" fill="#00ff88" font-size="10" text-anchor="middle">丙烯聚合</text>
+      <text x="260" y="110" fill="#00ff88" font-size="10" text-anchor="middle">反应 60min</text>
+
+      <rect x="330" y="78" width="80" height="44" rx="6" fill="rgba(123,97,255,0.12)" stroke="#7b61ff" stroke-width="1.5"/>
+      <text x="370" y="95" fill="#7b61ff" font-size="10" text-anchor="middle">在线 GC</text>
+      <text x="370" y="108" fill="#7b61ff" font-size="10" text-anchor="middle">取样分析</text>
+
+      <!-- Diamond decision -->
+      <polygon points="460,100 490,80 520,100 490,120" fill="rgba(255,184,0,0.12)" stroke="#ffb800" stroke-width="1.5"/>
+      <text x="490" y="98" fill="#ffb800" font-size="9" text-anchor="middle">转化率</text>
+      <text x="490" y="110" fill="#ffb800" font-size="9" text-anchor="middle">&gt;80%?</text>
+
+      <!-- Yes path -->
+      <rect x="540" y="80" width="80" height="40" rx="6" fill="rgba(0,212,255,0.12)" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="580" y="96" fill="#00d4ff" font-size="10" text-anchor="middle">GPC/DSC</text>
+      <text x="580" y="110" fill="#00d4ff" font-size="10" text-anchor="middle">表征分析</text>
+
+      <!-- No path - loop back -->
+      <rect x="330" y="155" width="80" height="30" rx="6" fill="rgba(255,184,0,0.08)" stroke="rgba(255,184,0,0.4)" stroke-width="1"/>
+      <text x="370" y="174" fill="#ffb800" font-size="9" text-anchor="middle">延长反应时间</text>
+
+      <!-- End -->
+      <rect x="640" y="85" width="50" height="30" rx="15" fill="rgba(61,81,104,0.4)" stroke="#6b8aad" stroke-width="1.5"/>
+      <text x="665" y="103" fill="#6b8aad" font-size="10" text-anchor="middle">结束</text>
+
+      <!-- Connections -->
+      <line x1="80" y1="100" x2="110" y2="100" stroke="#00d4ff" stroke-width="1.5" marker-end="url(#arr)"/>
+      <line x1="190" y1="100" x2="220" y2="100" stroke="#00d4ff" stroke-width="1.5"/>
+      <line x1="300" y1="100" x2="330" y2="100" stroke="#00d4ff" stroke-width="1.5"/>
+      <line x1="410" y1="100" x2="460" y2="100" stroke="#00d4ff" stroke-width="1.5"/>
+      <line x1="520" y1="100" x2="540" y2="100" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="530" y="94" fill="#00ff88" font-size="8">是</text>
+      <line x1="620" y1="100" x2="640" y2="100" stroke="#00d4ff" stroke-width="1.5"/>
+
+      <!-- No path -->
+      <line x1="490" y1="120" x2="490" y2="170" stroke="#ffb800" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="490" y1="170" x2="410" y2="170" stroke="#ffb800" stroke-width="1" stroke-dasharray="4 2"/>
+      <text x="500" y="155" fill="#ffb800" font-size="8">否</text>
+      <line x1="370" y1="170" x2="370" y2="155" stroke="#ffb800" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="330" y1="170" x2="260" y2="170" stroke="#ffb800" stroke-width="1" stroke-dasharray="4 2"/>
+      <line x1="260" y1="170" x2="260" y2="120" stroke="#ffb800" stroke-width="1" stroke-dasharray="4 2"/>
+
+      <defs>
+        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill="#00d4ff"/>
+        </marker>
+      </defs>
+    </svg>
+    <div class="svg-title">图 3.2-1 实验方案编排节点流程示意图（含条件分支与循环）</div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>使用技巧</strong>在模板库中搜索"MAO 活化流程"或"丙烯均聚"，可快速加载预置流程模板，再按实验需求微调参数节点即可，无需从零搭建。</div>
+  </div>
+</section>
+
+<!-- ═══ 3.3 PROCESS MONITOR ═══ -->
+<section id="sec-monitor" class="section">
+  <h2><span class="h2-num">3.3</span>反应过程实时监控</h2>
+
+  <p>反应过程监控页以 1 Hz 频率实时采集并展示反应釜内温度、压力、搅拌转速等关键工艺参数，同步推送在线 GC 色谱分析结果。</p>
+
+  <h3>温度 / 压力 S 型曲线解读</h3>
+  <p>茂金属催化丙烯聚合反应呈现典型 S 型放热特征：</p>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div><div style="font-size:11px;font-weight:600;color:var(--cyan);margin-bottom:4px;">① 诱导期（0~5 min）</div><div style="font-size:12px;color:var(--sub);">催化剂活化，温升缓慢，压力基本稳定</div></div>
+      <div><div style="font-size:11px;font-weight:600;color:var(--warn);margin-bottom:4px;">② 加速期（5~20 min）</div><div style="font-size:12px;color:var(--sub);">聚合放热，温度快速上升，系统进行冷却补偿</div></div>
+      <div><div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:4px;">③ 稳定期（20 min 后）</div><div style="font-size:12px;color:var(--sub);">热量产生与移除平衡，温度稳定在设定值</div></div>
+    </div>
+  </div>
+
+  <h3>在线 GC 取样分析记录字段说明</h3>
+  <table>
+    <thead><tr><th>字段名</th><th>含义</th><th>正常范围</th></tr></thead>
+    <tbody>
+      <tr><td>取样序号</td><td>本批次第 N 次 GC 进样，按时间顺序递增</td><td>1, 2, 3…</td></tr>
+      <tr><td>组分归属</td><td>色谱峰对应的化学物质名称</td><td>PP-主链信号、共聚单体、低聚物等</td></tr>
+      <tr><td>保留时间 RT/min</td><td>组分在色谱柱中停留时间，用于定性鉴别</td><td>取决于柱型，相对固定</td></tr>
+      <tr><td>峰面积占比 %</td><td>该组分在混合物中的相对含量（面积归一化法）</td><td>PP 主链 &gt;75%</td></tr>
+      <tr><td>取样时间</td><td>从反应釜取样的绝对时刻（ISO 8601 格式）</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h3>告警联锁响应流程</h3>
+  <div class="svg-container">
+    <svg width="100%" height="120" viewBox="0 0 680 120">
+      <rect x="0" y="35" width="90" height="50" rx="6" fill="rgba(255,71,87,0.12)" stroke="#ff4757" stroke-width="1.5"/>
+      <text x="45" y="57" fill="#ff4757" font-size="10" text-anchor="middle">超温/超压</text>
+      <text x="45" y="70" fill="#ff4757" font-size="10" text-anchor="middle">触发报警</text>
+
+      <rect x="120" y="35" width="90" height="50" rx="6" fill="rgba(255,184,0,0.1)" stroke="#ffb800" stroke-width="1.5"/>
+      <text x="165" y="57" fill="#ffb800" font-size="10" text-anchor="middle">系统自动</text>
+      <text x="165" y="70" fill="#ffb800" font-size="10" text-anchor="middle">检测确认</text>
+
+      <rect x="240" y="35" width="90" height="50" rx="6" fill="rgba(255,71,87,0.1)" stroke="#ff4757" stroke-width="1.5"/>
+      <text x="285" y="57" fill="#ff4757" font-size="10" text-anchor="middle">联锁触发</text>
+      <text x="285" y="70" fill="#ff4757" font-size="10" text-anchor="middle">自动切断</text>
+
+      <rect x="360" y="35" width="90" height="50" rx="6" fill="rgba(255,184,0,0.1)" stroke="#ffb800" stroke-width="1.5"/>
+      <text x="405" y="57" fill="#ffb800" font-size="10" text-anchor="middle">推送通知</text>
+      <text x="405" y="70" fill="#ffb800" font-size="10" text-anchor="middle">（短信/铃声）</text>
+
+      <rect x="480" y="35" width="90" height="50" rx="6" fill="rgba(0,255,136,0.1)" stroke="#00ff88" stroke-width="1.5"/>
+      <text x="525" y="57" fill="#00ff88" font-size="10" text-anchor="middle">工程师</text>
+      <text x="525" y="70" fill="#00ff88" font-size="10" text-anchor="middle">现场处置</text>
+
+      <rect x="600" y="35" width="80" height="50" rx="6" fill="rgba(0,212,255,0.1)" stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="640" y="57" fill="#00d4ff" font-size="10" text-anchor="middle">恢复生产</text>
+      <text x="640" y="70" fill="#00d4ff" font-size="10" text-anchor="middle">或放弃批次</text>
+
+      <line x1="90" y1="60" x2="120" y2="60" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="210" y1="60" x2="240" y2="60" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="330" y1="60" x2="360" y2="60" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="450" y1="60" x2="480" y2="60" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="570" y1="60" x2="600" y2="60" stroke="#00ff88" stroke-width="1.5"/>
+    </svg>
+    <div class="svg-title">图 3.3-1 告警联锁响应流程</div>
+  </div>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>紧急停车</strong>如遇严重泄漏或设备失控，点击顶部红色"紧急停车"按钮（E-Stop），系统将立即切断所有进料阀门并触发惰性气体保护，该操作不可撤销，请在现场确认安全后方可执行。</div>
+  </div>
+</section>
+
+<!-- ═══ 3.4 SPECTRUM ANALYSIS ═══ -->
+<section id="sec-analysis" class="section">
+  <h2><span class="h2-num">3.4</span>分析仪器与谱图解读</h2>
+
+  <p>CatalystOS 集成茂金属催化剂研发所需的四种核心表征仪器，所有谱图数据自动归档并与对应实验批次关联，支持多批次横向对比。</p>
+
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="card">
+      <h4>📊 GPC — 凝胶渗透色谱仪</h4>
+      <p>测量聚合物分子量分布，输出数均分子量（Mₙ）、重均分子量（Mw）和多分散性指数（PDI = Mw/Mₙ）。</p>
+      <div style="margin-top:10px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px;">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:6px;">PDI 区间参考</div>
+        <div style="font-size:12px;"><span class="badge badge-green">1.8 ~ 2.5</span> 茂金属 PP/PE 理想范围</div>
+        <div style="font-size:12px;margin-top:4px;"><span class="badge badge-warn">&gt; 3.0</span> 可能存在多活性位或降解</div>
+        <div style="font-size:12px;margin-top:4px;"><span class="badge badge-danger">&lt; 1.5</span> 活性中心均一性极好（单位点催化剂特征）</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>🌡️ DSC — 差示扫描量热仪</h4>
+      <p>测量熔融温度（Tm）、结晶温度（Tc）、结晶度（Xc）。等规聚丙烯（iPP）特征熔点约 <strong>135 ~ 165 °C</span></strong>，间规聚丙烯（sPP）约 125 ~ 135 °C。</p>
+      <div style="margin-top:10px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px;">
+        <div style="font-size:11px;color:var(--sub);margin-bottom:6px;">典型测量值</div>
+        <div style="font-size:12px;color:var(--text);">rac-Et(Ind)₂ZrCl₂/MAO → Tm <strong style="color:var(--cyan)">135.2 °C</strong></div>
+        <div style="font-size:12px;margin-top:4px;color:var(--text);">Cp₂HfCl₂/MAO → Tm <strong style="color:var(--cyan)">152.8 °C</strong></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>🔬 ¹³C NMR — 碳核磁共振</h4>
+      <p>分析聚合物微观结构：共单体插入率（mol%）、立构规整度（等规度 mmmm 五元组）、头-尾 / 头-头插入比例。</p>
+      <div class="callout callout-info" style="margin-top:10px;padding:10px;border-radius:6px;">
+        <div class="callout-body"><strong>为何用 ¹³C 而非 ¹H NMR？</strong>碳骨架的化学位移对立构序列更敏感，¹H NMR 的分辨率不足以区分 mmmm/mrrm 等五元组立构序列。</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>💡 FTIR — 傅里叶变换红外光谱</h4>
+      <p>快速定性鉴别聚合物类型（PP/PE/共聚物），利用特征峰（如 998 cm⁻¹ 等规 PP 峰）进行半定量分析。FTIR 测试时间 &lt; 2 min，适合生产线在线监测。</p>
+      <div style="margin-top:10px;padding:10px;background:rgba(0,0,0,0.2);border-radius:6px;">
+        <div style="font-size:12px;color:var(--text);">998 cm⁻¹ → 等规 PP 特征峰</div>
+        <div style="font-size:12px;margin-top:4px;color:var(--text);">720 cm⁻¹ → PE 亚甲基摇摆</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Spectra SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="160" viewBox="0 0 700 160">
+      <text x="10" y="18" fill="#6b8aad" font-size="11" font-weight="600">四种仪器谱图示意</text>
+
+      <!-- GPC -->
+      <text x="85" y="42" fill="#00d4ff" font-size="10" text-anchor="middle">GPC 分子量分布</text>
+      <rect x="10" y="48" width="150" height="90" rx="4" fill="rgba(0,0,0,0.3)"/>
+      <polyline points="20,130 40,128 55,120 70,95 85,72 95,70 110,80 125,105 138,125 150,130" fill="none" stroke="#00d4ff" stroke-width="2"/>
+      <line x1="10" y1="130" x2="160" y2="130" stroke="#3d5168" stroke-width="0.5"/>
+      <text x="85" y="145" fill="#3d5168" font-size="8" text-anchor="middle">log(Mw)</text>
+
+      <!-- DSC -->
+      <text x="260" y="42" fill="#7b61ff" font-size="10" text-anchor="middle">DSC 熔融曲线</text>
+      <rect x="185" y="48" width="150" height="90" rx="4" fill="rgba(0,0,0,0.3)"/>
+      <polyline points="195,130 210,129 220,128 228,125 235,115 240,95 245,80 250,78 255,82 260,100 268,120 278,128 330,130" fill="none" stroke="#7b61ff" stroke-width="2"/>
+      <line x1="185" y1="130" x2="335" y2="130" stroke="#3d5168" stroke-width="0.5"/>
+      <text x="250" y="72" fill="#ffb800" font-size="8">Tm=135°C</text>
+      <line x1="250" y1="78" x2="250" y2="130" stroke="#ffb800" stroke-width="0.8" stroke-dasharray="3 2"/>
+      <text x="260" y="145" fill="#3d5168" font-size="8" text-anchor="middle">温度 (°C)</text>
+
+      <!-- NMR -->
+      <text x="435" y="42" fill="#00ff88" font-size="10" text-anchor="middle">¹³C NMR 谱图</text>
+      <rect x="360" y="48" width="150" height="90" rx="4" fill="rgba(0,0,0,0.3)"/>
+      <line x1="360" y1="130" x2="510" y2="130" stroke="#3d5168" stroke-width="0.5"/>
+      <!-- NMR peaks -->
+      <line x1="390" y1="130" x2="390" y2="95" stroke="#00ff88" stroke-width="3"/>
+      <line x1="420" y1="130" x2="420" y2="75" stroke="#00ff88" stroke-width="3"/>
+      <line x1="450" y1="130" x2="450" y2="85" stroke="#00ff88" stroke-width="3"/>
+      <line x1="470" y1="130" x2="470" y2="110" stroke="#00ff88" stroke-width="2"/>
+      <line x1="490" y1="130" x2="490" y2="115" stroke="#00ff88" stroke-width="2"/>
+      <text x="390" y="90" fill="#3d5168" font-size="7" text-anchor="middle">mmmm</text>
+      <text x="435" y="145" fill="#3d5168" font-size="8" text-anchor="middle">化学位移 (ppm)</text>
+
+      <!-- FTIR -->
+      <text x="610" y="42" fill="#ffb800" font-size="10" text-anchor="middle">FTIR 红外谱图</text>
+      <rect x="535" y="48" width="155" height="90" rx="4" fill="rgba(0,0,0,0.3)"/>
+      <polyline points="545,80 555,82 560,85 565,75 570,72 575,80 580,85 585,110 590,130 595,128 600,125 605,110 608,100 612,105 615,120 618,128 625,130 650,130 660,128 665,110 668,90 672,88 675,110 680,130 685,130" fill="none" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="535" y1="130" x2="690" y2="130" stroke="#3d5168" stroke-width="0.5"/>
+      <text x="668" y="85" fill="#ffb800" font-size="7">998</text>
+      <text x="610" y="145" fill="#3d5168" font-size="8" text-anchor="middle">波数 (cm⁻¹)</text>
+    </svg>
+    <div class="svg-title">图 3.4-1 GPC / DSC / ¹³C NMR / FTIR 四种谱图示意</div>
+  </div>
+</section>
+
+<!-- ═══ 3.5 CATALYST DB ═══ -->
+<section id="sec-catdb" class="section">
+  <h2><span class="h2-num">3.5</span>催化剂数据库</h2>
+
+  <p>催化剂数据库收录 <strong>200+ 茂金属催化剂体系</strong>，按中心金属、配体类型、助催化剂、桥连方式分类索引，支持全文搜索与结构相似性检索。</p>
+
+  <h3>茂金属催化剂分类体系</h3>
+  <table>
+    <thead><tr><th>中心金属</th><th>配体类型</th><th>典型体系</th><th>特性</th></tr></thead>
+    <tbody>
+      <tr><td>Zr（锆）</td><td>桥连双茚基（C₂）</td><td>rac-Et(Ind)₂ZrCl₂</td><td>高等规 PP，高活性</td></tr>
+      <tr><td>Hf（铪）</td><td>Cp₂（非桥连）</td><td>Cp₂HfCl₂</td><td>超高分子量，热稳定性好</td></tr>
+      <tr><td>Zr（锆）</td><td>正丁基环戊二烯（非桥连）</td><td>(nBuCp)₂ZrCl₂</td><td>高活性乙烯聚合</td></tr>
+      <tr><td>Ti（钛）</td><td>限制几何构型（CGC）</td><td>Me₂Si(Cp)(tBuN)TiCl₂</td><td>共聚性能优异</td></tr>
+      <tr><td>Zr（锆）</td><td>桥连茚基-芴基（C₁）</td><td>Me₂C(Ind)(Flu)ZrCl₂</td><td>间规 PP，窄 PDI</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>SMILES 表示的局限性</strong>η⁵（haptic）配位键无法在标准 SMILES 字符串中精确表达，平台展示的 SMILES 为简化表示（去除金属-碳配位关系）。三维结构可视化模块通过 Canvas 2D 绘制，呈现 Cp 环与金属中心的空间构型，仅供参考，不用于精确量化计算。</div>
+  </div>
+</section>
+
+<!-- ═══ 3.6 SCHEDULING ═══ -->
+<section id="sec-scheduling" class="section">
+  <h2><span class="h2-num">3.6</span>高通量智能排产</h2>
+
+  <p>高通量智能排产模块将实验任务批量分配至各台反应釜，最大化设备利用率，自动处理优先级冲突、资源竞争与清洗窗口。</p>
+
+  <h3>核心算法原理</h3>
+  <div class="card">
+    <p>排产问题被建模为 <strong>Job-Shop 调度</strong>：每个"工单"（Job）由多道工序（Operation）组成，每道工序指定必须在哪台设备（Machine）上执行，目标是最小化总完工时间（makespan）或最大化日产量。</p>
+    <p>AI 调度引擎使用遗传算法（GA）+ 局部搜索，在 3~10 秒内求解 50 批次以内的近优解。</p>
+  </div>
+
+  <h3>自动跳过规则</h3>
+  <table>
+    <thead><tr><th>规则名称</th><th>触发条件</th><th>系统行为</th></tr></thead>
+    <tbody>
+      <tr><td>纯度阈值</td><td>中间 GC 分析：主链峰面积 &lt; 75%</td><td>跳过后续表征，标记为"需复查"</td></tr>
+      <tr><td>模型不确定性</td><td>预测置信区间 &gt; 30%（高不确定性）</td><td>降级至人工审核队列</td></tr>
+      <tr><td>设备异常</td><td>反应釜离线或维护中</td><td>自动重新分配至空闲设备</td></tr>
+      <tr><td>物料短缺</td><td>库存量 &lt; 计划用量 × 1.2</td><td>暂停该批次，触发补货预警</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ 3.7 ACTIVE LEARNING ═══ -->
+<section id="sec-al" class="section">
+  <h2><span class="h2-num">3.7</span>主动学习迭代</h2>
+
+  <p>主动学习（Active Learning）是 CatalystOS AI 引擎的核心进化机制：每一轮实验的真实表征结果（Mw、PDI、Tm、活性等）自动反哺高斯过程代理模型，下一轮推荐精度随之提升。</p>
+
+  <h3>迭代收敛曲线</h3>
+  <div class="svg-container">
+    <svg width="100%" height="200" viewBox="0 0 600 200">
+      <text x="10" y="18" fill="#6b8aad" font-size="11" font-weight="600">模型预测误差随迭代轮次收敛示意</text>
+      <!-- Axes -->
+      <line x1="50" y1="20" x2="50" y2="170" stroke="#3d5168" stroke-width="1"/>
+      <line x1="50" y1="170" x2="580" y2="170" stroke="#3d5168" stroke-width="1"/>
+      <text x="30" y="25" fill="#3d5168" font-size="9" text-anchor="middle">MAE</text>
+      <text x="300" y="188" fill="#3d5168" font-size="9" text-anchor="middle">迭代轮次</text>
+
+      <!-- Y axis labels -->
+      <text x="42" y="40" fill="#3d5168" font-size="9" text-anchor="end">高</text>
+      <text x="42" y="170" fill="#3d5168" font-size="9" text-anchor="end">低</text>
+
+      <!-- X axis labels -->
+      <text x="50" y="182" fill="#3d5168" font-size="9" text-anchor="middle">0</text>
+      <text x="150" y="182" fill="#3d5168" font-size="9" text-anchor="middle">5</text>
+      <text x="250" y="182" fill="#3d5168" font-size="9" text-anchor="middle">10</text>
+      <text x="350" y="182" fill="#3d5168" font-size="9" text-anchor="middle">15</text>
+      <text x="450" y="182" fill="#3d5168" font-size="9" text-anchor="middle">20</text>
+      <text x="550" y="182" fill="#3d5168" font-size="9" text-anchor="middle">25</text>
+
+      <!-- Learning curve -->
+      <polyline points="50,145 70,135 100,118 130,100 160,87 200,75 250,65 310,58 380,53 450,50 520,48 570,47" fill="none" stroke="#00d4ff" stroke-width="2.5"/>
+
+      <!-- Baseline (random) -->
+      <polyline points="50,145 100,140 150,142 200,138 250,141 310,139 380,140 450,137 520,141 570,139" fill="none" stroke="#3d5168" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+      <!-- Annotation -->
+      <text x="430" y="45" fill="#00d4ff" font-size="10">主动学习</text>
+      <text x="480" y="135" fill="#3d5168" font-size="10">随机采样基线</text>
+      <circle cx="380" cy="53" r="4" fill="#00ff88"/>
+      <text x="390" y="50" fill="#00ff88" font-size="9">推荐切换生产模型时机</text>
+    </svg>
+    <div class="svg-title">图 3.7-1 主动学习迭代收敛曲线（MAE 随轮次下降，约第 15 轮趋于稳定）</div>
+  </div>
+
+  <h3>何时切换生产模型？</h3>
+  <p>建议在同时满足以下条件时，点击"确认切换生产模型"：</p>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div>✅ <span style="color:var(--sub)">连续 3 轮 MAE 提升 &lt; 2%（收敛）</span></div>
+      <div>✅ <span style="color:var(--sub)">验证集 R² &gt; 0.90</span></div>
+      <div>✅ <span style="color:var(--sub)">累计实验轮次 ≥ 15 轮</span></div>
+      <div>✅ <span style="color:var(--sub)">科学家对推荐结果满意度评分 ≥ 4/5</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4. DEVICES ═══ -->
+<section id="sec-devices" class="section">
+  <h2><span class="h2-num">4</span>设备控制</h2>
+
+  <h3>AGV 调度控制</h3>
+  <p>AGV（自动导引车）模块实时展示实验室内 4 台 AGV 机器人的位置、当前任务与电量状态。操作者可手动指派取样/投料/转移任务，系统自动规划最优路径并避免碰撞。</p>
+
+  <table>
+    <thead><tr><th>操作</th><th>步骤</th></tr></thead>
+    <tbody>
+      <tr><td>手动指派任务</td><td>在地图上点击目标位置 → 选择 AGV → 选择任务类型 → 确认执行</td></tr>
+      <tr><td>紧急停止 AGV</td><td>点击 AGV 图标 → 选择"紧急停止"→ 确认（AGV 就地制动）</td></tr>
+      <tr><td>充电调度</td><td>电量 &lt; 20% 时系统自动安排充电；也可手动"返回充电桩"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>告警与联锁三级分类</h3>
+  <table>
+    <thead><tr><th>级别</th><th>名称</th><th>触发条件</th><th>响应要求</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-cyan">L1</span></td>
+        <td>提示</td>
+        <td>参数接近限值（&gt;90% 设定值）</td>
+        <td>通知记录，无需立即响应</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">L2</span></td>
+        <td>预警</td>
+        <td>参数超出软限位（黄色区间）</td>
+        <td>30 分钟内工程师确认处置</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-danger">L3</span></td>
+        <td>严重</td>
+        <td>参数超出硬限位 / 设备故障</td>
+        <td>立即联锁，强制人工处置，不可忽略</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ 5. REPORTS ═══ -->
+<section id="sec-reports" class="section">
+  <h2><span class="h2-num">5</span>报告与合规</h2>
+
+  <h3>实验报告自动生成</h3>
+  <p>实验完成后，系统自动从数据库聚合所有相关数据，生成结构化实验报告，包含：</p>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;color:var(--sub);">
+      <div>📌 实验基本信息（批次号、操作者、日期）</div>
+      <div>📌 使用催化剂体系（全名 + CAS 号）</div>
+      <div>📌 关键工艺参数（温度/压力/时间/Al:M 比）</div>
+      <div>📌 在线 GC 分析记录（所有取样时刻）</div>
+      <div>📌 表征结果（GPC/DSC/NMR 数据表）</div>
+      <div>📌 与 AI 推荐目标值的偏差分析</div>
+    </div>
+  </div>
+  <p>导出格式：<span class="badge badge-cyan">PDF</span> <span class="badge badge-green">CSV 原始数据</span>。PDF 报告包含数字签名，满足 21 CFR Part 11 合规要求。</p>
+
+  <h3>操作审计日志</h3>
+  <p>所有用户操作（登录、修改参数、确认推荐、导出数据等）均记录至不可篡改的审计流水，采用哈希链式存储，任何回溯修改都可被系统检测。</p>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-body"><strong>数据保留政策</strong>原始实验数据保留 10 年，审计日志保留 7 年，符合药典 GMP 和 ICH Q10 数据完整性规范。</div>
+  </div>
+</section>
+
+<!-- ═══ 6. FAQ ═══ -->
+<section id="sec-faq" class="section">
+  <h2><span class="h2-num">6</span>常见问题</h2>
+
+  <div class="faq-item">
+    <div class="faq-q">设备离线，为何界面仍显示"正常"状态？</div>
+    <div class="faq-a">设备状态刷新依赖 OPC-UA 心跳，默认 30 秒超时。若设备突然断连，系统需等待 1~2 个心跳周期（30~60 秒）才会切换为"离线"状态。如确认设备已断电，可在"数据采集监控"页手动刷新设备状态。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">AI 推荐的实验参数实际执行后活性偏低，怎么办？</div>
+    <div class="faq-a">将实验结果如实录入系统（不要修改），这是最重要的。每一个"差"的实验结果对贝叶斯模型同样有价值——它排除了该区域，帮助模型更精准地定位最优区间。通常 3~5 轮后推荐精度会明显改善。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">GPC 测试周期长（1~2天），会阻塞后续推荐吗？</div>
+    <div class="faq-a">不会。系统设计了"预测+实测"双轨机制：在 GPC 结果回来之前，AI 可基于在线 GC 的转化率和温升曲线进行中间态预测，继续推荐下一批实验。GPC 结果到达后，系统自动更新模型并重新校准历史预测值。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">实验报告生成失败，错误提示"数据不完整"？</div>
+    <div class="faq-a">请检查该批次是否已完成以下必填项：① 催化剂信息确认；② 至少 1 条在线 GC 记录；③ 实验结束状态确认。任意一项缺失都会触发"数据不完整"。进入实验任务详情页，红色标记的字段即为缺失项。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">AGV 停在中途不动了，如何处理？</div>
+    <div class="faq-a">首先确认 AGV 是否在等待"取样确认"信号（部分任务需要人工点击确认后才继续移动）。如非等待状态，点击 AGV 图标选择"重置任务"，AGV 将原路返回充电桩后重新接受调度。如物理卡顿，联系设备工程师现场处理。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">如何导出某个催化剂体系的全部历史实验数据？</div>
+    <div class="faq-a">进入"催化剂数据库" → 搜索催化剂名称 → 进入详情页 → 点击"导出关联实验数据"，选择时间范围和导出字段，系统会生成 CSV 压缩包供下载。如需 PDF 格式批量报告，请联系管理员开通批量导出权限。</div>
+  </div>
+</section>
+
+<!-- ═══ APPENDIX ═══ -->
+<section id="sec-appendix" class="section">
+  <h2><span class="h2-num">附</span>附录</h2>
+
+  <h3>关键术语表</h3>
+  <table>
+    <thead><tr><th>术语</th><th>英文全称</th><th>释义</th></tr></thead>
+    <tbody>
+      <tr><td><strong>PDI</strong></td><td>Polydispersity Index</td><td>多分散性指数（= Mw/Mn），反映分子量分布宽度，茂金属体系典型值 1.8~2.5</td></tr>
+      <tr><td><strong>Tm</strong></td><td>Melting Temperature</td><td>熔融峰温度（DSC 测量），等规 PP 约 135°C，高等规 PP 可达 162°C</td></tr>
+      <tr><td><strong>MAO</strong></td><td>Methylaluminoxane</td><td>甲基铝氧烷，茂金属催化剂最常用助催化剂，提供空配位位点并烷基化</td></tr>
+      <tr><td><strong>茂金属</strong></td><td>Metallocene</td><td>含 η⁵-环戊二烯基（Cp）配体的过渡金属有机化合物，具有单一活性位特征</td></tr>
+      <tr><td><strong>SHAP</strong></td><td>SHapley Additive exPlanations</td><td>基于博弈论的机器学习模型解释方法，量化每个特征对预测值的贡献</td></tr>
+      <tr><td><strong>GPR</strong></td><td>Gaussian Process Regression</td><td>高斯过程回归，贝叶斯优化的代理模型，输出预测值及不确定性估计</td></tr>
+      <tr><td><strong>贝叶斯优化</strong></td><td>Bayesian Optimization</td><td>利用代理模型指导实验采样，以最少实验次数逼近目标函数最优值的黑盒优化方法</td></tr>
+      <tr><td><strong>η⁵</strong></td><td>Hapto-5 coordination</td><td>η⁵ 配位模式，中心金属与 Cp 环 5 个碳原子同时配位，茂金属核心键合方式</td></tr>
+      <tr><td><strong>rac-</strong></td><td>racemic</td><td>外消旋配合物，两个茚基配体呈反式对称排列，是生产等规 PP 的主要构型</td></tr>
+      <tr><td><strong>EI</strong></td><td>Expected Improvement</td><td>期望改进，贝叶斯优化采集函数，衡量某候选点超越当前最优值的期望收益</td></tr>
+    </tbody>
+  </table>
+
+  <h3>系统权限矩阵</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>功能模块</th>
+        <th>系统管理员</th>
+        <th>实验科学家</th>
+        <th>设备工程师</th>
+        <th>只读访客</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>首页大屏</td><td>✅ 读写</td><td>✅ 读写</td><td>✅ 读写</td><td>👁 只读</td></tr>
+      <tr><td>设备拓扑总览</td><td>✅ 读写</td><td>👁 只读</td><td>✅ 读写</td><td>❌</td></tr>
+      <tr><td>AGV 调度控制</td><td>✅ 读写</td><td>⚠️ 限制</td><td>✅ 读写</td><td>❌</td></tr>
+      <tr><td>告警与联锁配置</td><td>✅ 读写</td><td>👁 只读</td><td>✅ 读写</td><td>❌</td></tr>
+      <tr><td>反应过程监控</td><td>✅ 读写</td><td>✅ 读写</td><td>👁 只读</td><td>❌</td></tr>
+      <tr><td>实验方案编排</td><td>✅ 读写</td><td>✅ 读写</td><td>❌</td><td>❌</td></tr>
+      <tr><td>AI 方案推荐</td><td>✅ 读写</td><td>✅ 读写</td><td>❌</td><td>❌</td></tr>
+      <tr><td>催化剂数据库</td><td>✅ 读写</td><td>✅ 读写</td><td>👁 只读</td><td>👁 只读</td></tr>
+      <tr><td>实验报告导出</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+      <tr><td>操作审计日志</td><td>✅ 读写</td><td>👁 只读</td><td>👁 只读</td><td>❌</td></tr>
+      <tr><td>用户权限管理</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:40px;padding:20px;border:1px solid var(--border);border-radius:8px;text-align:center;background:var(--card);">
+    <div style="font-size:12px;color:var(--dim);">CatalystOS 用户使用手册 v1.0</div>
+    <div style="font-size:12px;color:var(--dim);margin-top:4px;">© 2026 CatalystOS Team · 技术支持请联系 support@catalystos.ai</div>
+    <div style="margin-top:12px;">
+      <span class="badge badge-cyan">React 18</span>&nbsp;
+      <span class="badge badge-purple">贝叶斯优化</span>&nbsp;
+      <span class="badge badge-green">GPC/DSC/NMR/FTIR</span>&nbsp;
+      <span class="badge badge-warn">茂金属催化</span>
+    </div>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

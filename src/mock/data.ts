@@ -1,11 +1,67 @@
 // ── 催化剂数据 ──────────────────────────────────────────
+// 注：茂金属配合物的 SMILES 仅为示意，真实 η⁵ 配位键在 SMILES 中难以完整表达
+// 各催化剂体系均为工业界实际使用的代表性茂金属催化剂类型
 export const catalysts = [
-  { id: 'CAT-2024-0045', smiles: 'Cl[Zr](Cl)(C1=CC=CC=C1)C1=CC=CC=C1', metal: 'Zr', cocatalyst: 'MAO', activity: 9240, pdi: 2.1, tm: 135.2, insertion: 8.2, source: 'experiment', confidence: 0.95 },
-  { id: 'CAT-2024-0044', smiles: 'Cl[Hf](Cl)(C1=CC=CC=C1)C1=CC=CC=C1', metal: 'Hf', cocatalyst: 'Borate', activity: 7820, pdi: 1.8, tm: 138.1, insertion: 6.4, source: 'experiment', confidence: 0.92 },
-  { id: 'CAT-2024-0043', smiles: 'Cl[Zr](Cl)(C1=CC=C(C)C=C1)C1=CC=CC=C1', metal: 'Zr', cocatalyst: 'MAO', activity: 8560, pdi: 2.3, tm: 133.8, insertion: 9.1, source: 'literature', confidence: 0.78 },
-  { id: 'CAT-2024-0042', smiles: 'Cl[Ti](Cl)(C1=CC=CC=C1)C1=CC=CC=C1', metal: 'Ti', cocatalyst: 'MAO', activity: 4320, pdi: 3.1, tm: 128.4, insertion: 12.3, source: 'simulation', confidence: 0.65 },
-  { id: 'CAT-2024-0041', smiles: 'Cl[Zr](Cl)(C1=CC=CC=C1)C1=CC=C(C)C=C1', metal: 'Zr', cocatalyst: 'Borate', activity: 10120, pdi: 1.9, tm: 136.7, insertion: 7.8, source: 'experiment', confidence: 0.97 },
-  { id: 'CAT-2024-0040', smiles: 'Cl[Hf](Cl)(C1=CC=CC=C1)C1=CC=C(C)C=C1', metal: 'Hf', cocatalyst: 'MAO', activity: 6890, pdi: 2.0, tm: 140.2, insertion: 5.9, source: 'literature', confidence: 0.82 },
+  {
+    id: 'CAT-2024-0045', metal: 'Zr', cocatalyst: 'MAO',
+    name: 'rac-Et(Ind)₂ZrCl₂',
+    fullName: 'rac-亚乙基双(茚基)二氯化锆',
+    smiles: 'Cl[Zr](Cl)(C1=CC=CC2=CC=CC=C12)C1=CC=CC2=CC=CC=C12', // 简化表示，茚基配体
+    ligandType: '桥连双茚基（C₂对称）',
+    activity: 9240, pdi: 2.1, tm: 135.2, insertion: 8.2,
+    source: 'experiment', confidence: 0.95,
+    note: '等规聚丙烯主流催化剂，高活性，窄分布'
+  },
+  {
+    id: 'CAT-2024-0044', metal: 'Hf', cocatalyst: 'Borate',
+    name: 'Cp₂HfCl₂',
+    fullName: '双(环戊二烯基)二氯化铪',
+    smiles: 'Cl[Hf](Cl)(C1=CC=CC1)C1=CC=CC1', // η5-Cp 简化
+    ligandType: '非桥连双茂环',
+    activity: 7820, pdi: 1.8, tm: 138.1, insertion: 6.4,
+    source: 'experiment', confidence: 0.92,
+    note: '热稳定性优于 Zr 类似物，适合高温聚合'
+  },
+  {
+    id: 'CAT-2024-0043', metal: 'Zr', cocatalyst: 'MAO',
+    name: 'rac-Me₂Si(Ind)₂ZrCl₂',
+    fullName: 'rac-二甲基硅基双(茚基)二氯化锆',
+    smiles: 'Cl[Zr](Cl)(C1=CC=CC2=CC=CC=C12)[Si](C)(C)(C1=CC=CC2=CC=CC=C12)', // 简化
+    ligandType: '硅桥连双茚基',
+    activity: 8560, pdi: 2.3, tm: 133.8, insertion: 9.1,
+    source: 'literature', confidence: 0.78,
+    note: '刚性硅桥提升立构选择性，文献值'
+  },
+  {
+    id: 'CAT-2024-0042', metal: 'Ti', cocatalyst: 'MAO',
+    name: 'Cp₂TiCl₂',
+    fullName: '双(环戊二烯基)二氯化钛',
+    smiles: 'Cl[Ti](Cl)(C1=CC=CC1)C1=CC=CC1',
+    ligandType: '非桥连双茂环',
+    activity: 4320, pdi: 3.1, tm: 128.4, insertion: 12.3,
+    source: 'simulation', confidence: 0.65,
+    note: 'Ti 基活性较低，分子量分布较宽，模拟预测值'
+  },
+  {
+    id: 'CAT-2024-0041', metal: 'Zr', cocatalyst: 'Borate',
+    name: '(nBuCp)₂ZrCl₂',
+    fullName: '双(正丁基环戊二烯基)二氯化锆',
+    smiles: 'Cl[Zr](Cl)(C1=CC=CC1CCCC)C1=CC=CC1CCCC', // nBuCp 简化
+    ligandType: '烷基取代茂环',
+    activity: 10120, pdi: 1.9, tm: 136.7, insertion: 7.8,
+    source: 'experiment', confidence: 0.97,
+    note: 'n-丁基取代增强溶解性，活性最优批次'
+  },
+  {
+    id: 'CAT-2024-0040', metal: 'Hf', cocatalyst: 'MAO',
+    name: 'rac-Et(Ind)₂HfCl₂',
+    fullName: 'rac-亚乙基双(茚基)二氯化铪',
+    smiles: 'Cl[Hf](Cl)(C1=CC=CC2=CC=CC=C12)C1=CC=CC2=CC=CC=C12',
+    ligandType: '桥连双茚基（C₂对称）',
+    activity: 6890, pdi: 2.0, tm: 140.2, insertion: 5.9,
+    source: 'literature', confidence: 0.82,
+    note: '铪类桥连茚基，Tm 更高，文献报道值'
+  },
 ]
 
 // ── 实验批次数据 ──────────────────────────────────────────
@@ -68,13 +124,58 @@ export const inventory = [
 ]
 
 // ── 实验报告列表 ──────────────────────────────────────────
+// 工单名称采用茂金属催化剂聚合实验的标准命名规范
+// 仪器类型为该领域真实使用的分析仪器
 export const reports = [
-  { id: 'RPT-20240518-001', workOrder: 'WO-20240518-047', name: '茂金属聚合分析实验', instrument: 'GPC + DSC', created: '2024-05-18 10:30', started: '2024-05-18 08:00', generated: '2024-05-18 10:15', status: 'generated', operator: '张研究员' },
-  { id: 'RPT-20240517-008', workOrder: 'WO-20240517-038', name: '立架+投料+反应', instrument: 'Carousel1, AGV-1, C1', created: '2024-04-17 12:49', started: '2024-04-17 08:00', generated: '2024-04-17 21:02', status: 'pending', operator: 'Admin' },
-  { id: 'RPT-20240517-007', workOrder: 'WO-20240517-037', name: '立架-依立特', instrument: 'Carousel1, AGV-1, C1', created: '2024-04-17 12:52', started: '2024-04-17 11:12', generated: '2024-04-17 11:26', status: 'generated', operator: 'Admin' },
-  { id: 'RPT-20240402-003', workOrder: 'WO-20240402-012', name: '立座+氛吹', instrument: 'Carousel1, AGV-1, C1', created: '2024-04-02 01:44', started: '2024-04-16 18:29', generated: '2024-04-16 18:46', status: 'pending', operator: 'Admin' },
-  { id: 'RPT-20240401-002', workOrder: 'WO-20240401-008', name: '演示工单(测试)', instrument: 'Carousel1, Flash, C1', created: '2024-04-01 17:04', started: '2024-04-01 09:00', generated: '2024-04-01 17:04', status: 'generated', operator: 'Admin' },
-  { id: 'RPT-20240315-001', workOrder: 'WO-20240315-001', name: '聚合物分析实验', instrument: 'Carousel1, AGV-1, A1', created: '2024-03-15 05:47', started: '2024-03-15 08:00', generated: '2024-03-15 05:47', status: 'generated', operator: 'Admin' },
+  {
+    id: 'RPT-20240518-001', workOrder: 'WO-20240518-047',
+    name: 'rac-Et(Ind)₂ZrCl₂/MAO 丙烯聚合活性筛选',
+    instrument: 'GPC-IR（凝胶渗透-红外联用）',
+    created: '2024-05-18 10:30', started: '2024-05-18 08:00', generated: '2024-05-18 10:15',
+    status: 'generated', operator: '张研究员'
+  },
+  {
+    id: 'RPT-20240518-002', workOrder: 'WO-20240518-046',
+    name: 'Al/Zr 比梯度优化实验（Zr/MAO 体系）',
+    instrument: 'GPC（Waters 1515）+ DSC（TA Q2000）',
+    created: '2024-05-18 09:45', started: '2024-05-18 09:30', generated: null,
+    status: 'pending', operator: '李工程师'
+  },
+  {
+    id: 'RPT-20240517-003', workOrder: 'WO-20240517-041',
+    name: '(nBuCp)₂ZrCl₂ 丙烯/1-己烯共聚 α=0.15 系列',
+    instrument: '¹³C NMR（Bruker Avance 400）+ GPC',
+    created: '2024-05-17 16:20', started: '2024-05-17 10:00', generated: '2024-05-17 17:45',
+    status: 'generated', operator: '王科学家'
+  },
+  {
+    id: 'RPT-20240516-004', workOrder: 'WO-20240516-038',
+    name: 'Cp₂HfCl₂/Borate 高温聚合（70°C）表征',
+    instrument: 'DSC（TA Q2000）+ FTIR（Bruker Tensor）',
+    created: '2024-05-16 14:00', started: '2024-05-16 08:30', generated: '2024-05-16 15:20',
+    status: 'generated', operator: '赵博士'
+  },
+  {
+    id: 'RPT-20240515-005', workOrder: 'WO-20240515-035',
+    name: 'rac-Me₂Si(Ind)₂ZrCl₂ 低温等规 PP 合成（50°C）',
+    instrument: 'GPC + ¹³C NMR + DSC（全套表征）',
+    created: '2024-05-15 11:30', started: '2024-05-15 07:00', generated: '2024-05-16 09:00',
+    status: 'generated', operator: '张研究员'
+  },
+  {
+    id: 'RPT-20240514-006', workOrder: 'WO-20240514-031',
+    name: 'MAO 用量对催化活性影响研究（Al/Zr=500~1200）',
+    instrument: 'GPC（Waters Alliance）',
+    created: '2024-05-14 09:00', started: '2024-05-14 08:00', generated: null,
+    status: 'processing', operator: '李工程师'
+  },
+  {
+    id: 'RPT-20240510-007', workOrder: 'WO-20240510-022',
+    name: 'Et(Ind)₂ZrCl₂ 异常批次复现实验（飞温事件后）',
+    instrument: 'GPC + ICP-OES（残余 Zr 金属分析）',
+    created: '2024-05-10 13:00', started: '2024-05-10 09:00', generated: '2024-05-10 16:30',
+    status: 'generated', operator: '安全组'
+  },
 ]
 
 // ── SOP 方法库 ──────────────────────────────────────────

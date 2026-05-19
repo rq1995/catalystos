@@ -16,28 +16,28 @@ const menuGroups = [
     items: [{ key: '/dashboard', icon: <HomeOutlined />, label: '首页大屏' }]
   },
   {
+    label: '设备控制',
+    items: [
+      { key: '/devices/topology', icon: <ApartmentOutlined />, label: '设备拓扑总览' },
+      { key: '/devices/agv', icon: <CarOutlined />, label: 'AGV 调度控制' },
+      { key: '/devices/alarms', icon: <AlertOutlined />, label: '告警与联锁' },
+    ]
+  },
+  {
     label: '实验中台',
     items: [
       { key: '/lab/process', icon: <LineChartOutlined />, label: '反应过程监控' },
-      { key: '/lab/orchestration', icon: <BranchesOutlined />, label: '流程编排' },
-      { key: '/lab/workorders', icon: <AppstoreOutlined />, label: '工单看板' },
-      { key: '/lab/scheduling', icon: <ThunderboltOutlined />, label: '智能排产' },
+      { key: '/lab/orchestration', icon: <BranchesOutlined />, label: '实验方案编排' },
+      { key: '/lab/workorders', icon: <AppstoreOutlined />, label: '实验任务调度' },
+      { key: '/lab/scheduling', icon: <ThunderboltOutlined />, label: '高通量智能排产' },
     ]
   },
   {
     label: 'AI 智能中心',
     items: [
       { key: '/ai/recommend', icon: <RobotOutlined />, label: '实验方案推荐' },
-      { key: '/ai/models', icon: <FundOutlined />, label: '模型管理' },
-      { key: '/ai/learning', icon: <NodeIndexOutlined />, label: '主动学习看板' },
-    ]
-  },
-  {
-    label: '设备管理',
-    items: [
-      { key: '/devices/topology', icon: <ApartmentOutlined />, label: '设备拓扑' },
-      { key: '/devices/agv', icon: <CarOutlined />, label: 'AGV 控制' },
-      { key: '/devices/alarms', icon: <AlertOutlined />, label: '告警中心' },
+      { key: '/ai/models', icon: <FundOutlined />, label: '预测模型管理' },
+      { key: '/ai/learning', icon: <NodeIndexOutlined />, label: '主动学习迭代' },
     ]
   },
   {
