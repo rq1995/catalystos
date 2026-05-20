@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ReactFlow, {
   addEdge,
   useNodesState,
@@ -15,6 +16,7 @@ import ReactFlow, {
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { Button, Modal, Popover, InputNumber, Form, List, message, Typography, Space, Divider } from 'antd'
+import { pushControlLog } from '../../components/Control/controlBus'
 import {
   ExperimentOutlined,
   ThunderboltOutlined,
@@ -198,6 +200,7 @@ const versionHistory = [
 // Main Component
 // ─────────────────────────────────────────────
 export default function Orchestration() {
+  const navigate = useNavigate()
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const [confirmModal, setConfirmModal] = useState(false)
@@ -400,7 +403,19 @@ export default function Orchestration() {
       <Modal
         open={confirmModal}
         onCancel={() => setConfirmModal(false)}
-        onOk={() => { message.success('流程已下发执行！'); setConfirmModal(false) }}
+        onOk={() => {
+          message.success('流程已下发执行！')
+          pushControlLog({ user: '张研究员', device: '编排引擎', action: '下发实验流程', before: '草稿', after: `${nodes.length} 节点 / ${edges.length} 连接` })
+          setConfirmModal(false)
+          Modal.success({
+            title: '下发成功',
+            content: '可前往「实时控制中心」查看设备级响应。',
+            okText: '前往控制中心',
+            okButtonProps: { style: { background: '#00d4ff', borderColor: '#00d4ff', color: '#080c18', fontWeight: 700 } },
+            onOk: () => navigate('/control/center'),
+            styles: { content: { background: '#0d1525', border: '1px solid rgba(255,255,255,0.1)' } },
+          })
+        }}
         okText="确认下发"
         cancelText="取消"
         title={<span style={{ color: '#e8f4ff' }}>确认下发执行</span>}

@@ -231,3 +231,163 @@ export const chemDB = Array.from({ length: 20 }, (_, i) => ({
   heavyAtoms: 15 + i * 3,
   aromatic: i % 3,
 }))
+
+// ── 设备控制层数据 ──────────────────────────────────────────
+// 以下为新增的"实时设备控制"模块所用 mock 数据
+// 设备命名规则：<TYPE>-<SERIAL>，反应釜相关子设备序号与 R-XX 对齐
+
+// 32 路 MFC 质量流量控制器（每反应釜 1 路主气）
+export const mfcDevices = Array.from({ length: 32 }, (_, i) => {
+  const reactor = `R-${String(i + 1).padStart(2, '0')}`
+  const gas = i % 3 === 0 ? '丙烯' : i % 3 === 1 ? '乙烯' : '氮气'
+  const setpoint = parseFloat((1.5 + Math.random() * 1.5).toFixed(2))
+  return {
+    id: `MFC-${String(i + 1).padStart(2, '0')}`,
+    reactor,
+    gas,
+    setpoint,
+    actual: parseFloat((setpoint + (Math.random() - 0.5) * 0.05).toFixed(3)),
+    totalizer: parseFloat((20 + Math.random() * 80).toFixed(2)),
+    rangeMax: 5,
+    status: i < 28 ? 'online' : 'offline',
+  }
+})
+
+// 32 路 TCU 动态温控单元
+export const tcuDevices = Array.from({ length: 32 }, (_, i) => {
+  const reactor = `R-${String(i + 1).padStart(2, '0')}`
+  const setpoint = 60 + Math.floor(Math.random() * 20)
+  return {
+    id: `TCU-${String(i + 1).padStart(2, '0')}`,
+    reactor,
+    mode: (i % 7 === 3 ? 'cool' : 'heat') as 'heat' | 'cool' | 'idle',
+    setpoint,
+    jacket: parseFloat((setpoint - 1.5 + Math.random() * 3).toFixed(2)),
+    inner: parseFloat((setpoint - 0.5 + Math.random() * 1.2).toFixed(2)),
+    pidP: 2.4,
+    pidI: 0.18,
+    pidD: 0.06,
+    status: i < 28 ? 'online' : 'offline',
+  }
+})
+
+// 32 路搅拌扭矩传感器
+export const torqueSensors = Array.from({ length: 32 }, (_, i) => {
+  const reactor = `R-${String(i + 1).padStart(2, '0')}`
+  const torque = parseFloat((0.3 + Math.random() * 0.8).toFixed(3))
+  return {
+    id: `TRQ-${String(i + 1).padStart(2, '0')}`,
+    reactor,
+    rpm: 200 + Math.floor(Math.random() * 200),
+    torque,
+    threshold: 1.5,
+    overload: torque > 1.5,
+  }
+})
+
+// 气动阀门组（每反应釜 5 类阀，仅展示前 8 路用于演示）
+const valveTypes = [
+  { suffix: 'V1', name: '真空阀', type: 'vacuum' },
+  { suffix: 'V2', name: '氮气阀', type: 'inert' },
+  { suffix: 'V3', name: '单体进料阀', type: 'feed' },
+  { suffix: 'V4', name: '泄压阀', type: 'vent' },
+  { suffix: 'V5', name: '进样阀', type: 'inject' },
+] as const
+export const valveBank = Array.from({ length: 8 }, (_, i) => {
+  const reactor = `R-${String(i + 1).padStart(2, '0')}`
+  return valveTypes.map(v => ({
+    id: `${reactor}-${v.suffix}`,
+    name: `${v.name}-${reactor}`,
+    type: v.type,
+    state: 'closed' as 'open' | 'closed',
+    reactor,
+  }))
+}).flat()
+
+// 真空泵 × 2
+export const vacuumPumps = [
+  { id: 'VP-01', name: '真空泵 A', status: 'running', vacuumLevel: 12, runtime: 1247.3 },
+  { id: 'VP-02', name: '真空泵 B', status: 'idle', vacuumLevel: 1013, runtime: 982.1 },
+]
+
+// H2O/O2 微量水氧分析仪 × 2（手套箱 A/B）
+export const o2h2oSensors = [
+  { id: 'GAS-01', location: '手套箱 A', h2o: 0.42, o2: 0.18, threshold: 1.0, interlocked: false },
+  { id: 'GAS-02', location: '手套箱 B', h2o: 0.31, o2: 0.09, threshold: 1.0, interlocked: false },
+]
+
+// 高精度注射泵（4 通道 × 2 组 = 8 路）
+const solvents = ['甲苯', '正己烷', 'MAO 10wt%', 'Cp₂ZrCl₂ 1mM', '异丙醇', 'HCl/EtOH', '丙烯液相', '空闲']
+export const syringePumps = Array.from({ length: 8 }, (_, i) => ({
+  id: `SP-${String(i + 1).padStart(2, '0')}`,
+  channel: (i % 4) + 1,
+  group: i < 4 ? 'A' : 'B',
+  solvent: solvents[i],
+  flowRate: parseFloat((50 + Math.random() * 150).toFixed(1)),
+  volume: parseFloat((Math.random() * 5).toFixed(2)),
+  pressure: parseFloat((0.05 + Math.random() * 0.1).toFixed(3)),
+  status: i < 6 ? 'idle' : 'running',
+}))
+
+// 高精度天平 × 4
+export const balances = [
+  { id: 'BAL-01', location: '加样仪 A', weight: 0.0482, stable: true, tare: 12.345, capacity: 220 },
+  { id: 'BAL-02', location: '加样仪 B', weight: 0.0125, stable: true, tare: 12.318, capacity: 220 },
+  { id: 'BAL-03', location: '溶液配制台', weight: 4.823, stable: true, tare: 158.42, capacity: 2200 },
+  { id: 'BAL-04', location: '产物称重', weight: 0, stable: true, tare: 0, capacity: 5000 },
+]
+
+// 多位切换阀（8 通道）× 4
+export const rotaryValves = Array.from({ length: 4 }, (_, i) => ({
+  id: `RV-${String(i + 1).padStart(2, '0')}`,
+  group: i < 2 ? 'A' : 'B',
+  currentPort: (i % 8) + 1,
+  portMap: ['甲苯', '正己烷', '甲基环己烷', '氯苯', '废液', 'MAO', 'Borate', 'Bypass'],
+}))
+
+// 终止泵 × 4
+export const quenchPumps = Array.from({ length: 4 }, (_, i) => {
+  const reactor = `R-${String(i * 8 + 1).padStart(2, '0')}`
+  return {
+    id: `QP-${String(i + 1).padStart(2, '0')}`,
+    reactor,
+    status: 'standby' as 'standby' | 'injecting' | 'fault',
+    injectedVolume: 0,
+    targetVolume: 5,
+    quencher: i % 2 === 0 ? '异丙醇' : 'HCl/EtOH',
+    trigger: 'idle' as 'manual' | 'auto' | 'idle',
+  }
+})
+
+// 背压泄放阀 × 4
+export const backPressureValves = Array.from({ length: 4 }, (_, i) => {
+  const reactor = `R-${String(i * 8 + 1).padStart(2, '0')}`
+  return {
+    id: `BPV-${String(i + 1).padStart(2, '0')}`,
+    reactor,
+    openPercent: 0,
+    inletPressure: parseFloat((0.5 + Math.random() * 0.2).toFixed(3)),
+    outletPressure: 0.101,
+    ventRate: 0,
+    maxVentRate: 0.05,
+  }
+})
+
+// 全局控制指令日志（被各控制页 push）
+export interface ControlLogEntry {
+  id: string
+  time: string
+  user: string
+  device: string
+  action: string
+  before: string | number
+  after: string | number
+}
+export const controlLogs: ControlLogEntry[] = [
+  { id: 'CTL-001', time: '14:22:15', user: '张研究员', device: 'TCU-08', action: '设定温度', before: 65, after: 68 },
+  { id: 'CTL-002', time: '14:18:42', user: '李工程师', device: 'MFC-12', action: '设定流量', before: 2.0, after: 2.4 },
+  { id: 'CTL-003', time: '14:05:09', user: '系统AI', device: 'R-08-V2', action: '阀门切换', before: 'closed', after: 'open' },
+  { id: 'CTL-004', time: '13:55:31', user: '王科学家', device: 'SP-03', action: '启动注液', before: 'idle', after: 'running' },
+  { id: 'CTL-005', time: '13:40:18', user: '张研究员', device: 'BPV-01', action: '设定开度', before: 0, after: 12 },
+]
+

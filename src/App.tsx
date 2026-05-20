@@ -21,6 +21,11 @@ import AuditLog from './pages/AuditLog'
 import DataCollection from './pages/DataCollection'
 import ModelManage from './pages/ModelManage'
 import ActiveLearning from './pages/ActiveLearning'
+import ControlCenter from './pages/ControlCenter'
+import Atmosphere from './pages/Atmosphere'
+import FeedingControl from './pages/FeedingControl'
+import Polymerization from './pages/Polymerization'
+import QuenchVent from './pages/QuenchVent'
 
 export default function App() {
   return (
@@ -39,6 +44,11 @@ export default function App() {
           <Route path="devices/topology" element={<DeviceTopo />} />
           <Route path="devices/agv" element={<AGVControl />} />
           <Route path="devices/alarms" element={<AlarmCenter />} />
+          <Route path="control/center" element={<ControlCenter />} />
+          <Route path="control/atmosphere" element={<Atmosphere />} />
+          <Route path="control/feeding" element={<FeedingControl />} />
+          <Route path="control/polymerization" element={<Polymerization />} />
+          <Route path="control/quench" element={<QuenchVent />} />
           <Route path="analysis/spectrum" element={<SpectrumAnalysis />} />
           <Route path="analysis/screen" element={<DataScreen />} />
           <Route path="analysis/structure" element={<StructurePerf />} />

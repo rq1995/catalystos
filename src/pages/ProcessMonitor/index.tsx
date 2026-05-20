@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import ReactECharts from 'echarts-for-react'
 import { motion } from 'framer-motion'
 import { Select, Modal, Button, Table, Tag, Badge, Progress } from 'antd'
@@ -247,6 +248,7 @@ function sigmoid(t: number, tStart = 0, tEnd = 120, low = 50, high = 65): number
 
 // ── 主页面 ───────────────────────────────────────────────
 export default function ProcessMonitor() {
+  const navigate = useNavigate()
   const [selectedBatch, setSelectedBatch] = useState('EXP-2024-0044')
   const [selectedReactor, setSelectedReactor] = useState('R-12')
   const [gcData, setGcData] = useState(() => generateGCData(0))
@@ -340,6 +342,13 @@ export default function ProcessMonitor() {
         </div>
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 10, alignItems: 'center' }}>
           <Badge status="processing" color="#00d4ff" text={<span style={{ color: '#00d4ff', fontSize: 12 }}>实时采集中</span>} />
+          <Button
+            size="small"
+            onClick={() => navigate(`/control/polymerization?reactor=${selectedReactor}`)}
+            style={{ background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.4)', color: '#00d4ff' }}
+          >
+            打开 {selectedReactor} 控制台
+          </Button>
           <Button
             icon={<ThunderboltOutlined />}
             size="small"
