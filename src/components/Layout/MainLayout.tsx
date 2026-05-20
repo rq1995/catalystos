@@ -77,6 +77,7 @@ const menuGroups = [
     label: '系统管理',
     items: [
       { key: '/system/datacollect', icon: <WifiOutlined />, label: '数据采集监控' },
+      { key: '/system/users', icon: <UserOutlined />, label: '账号管理' },
     ]
   },
 ]
@@ -174,13 +175,31 @@ export default function MainLayout() {
 
         {/* Bottom user */}
         {!collapsed && (
-          <div style={{ padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'linear-gradient(135deg,#7b61ff,#00d4ff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: '#fff' }}>张</div>
-            <div style={{ flex: 1 }}>
+          <div
+            onClick={() => navigate('/user/profile')}
+            style={{
+              padding: '12px 16px', borderTop: '1px solid rgba(255,255,255,0.06)',
+              display: 'flex', alignItems: 'center', gap: 8,
+              cursor: 'pointer', transition: 'background 0.15s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+            onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+          >
+            <div style={{
+              width: 28, height: 28, borderRadius: '50%',
+              background: 'linear-gradient(135deg,#7b61ff,#00d4ff)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 12, color: '#fff', flexShrink: 0,
+              boxShadow: currentPath.startsWith('/user') ? '0 0 8px rgba(0,212,255,0.4)' : 'none',
+            }}>张</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 12, color: '#e8f4ff' }}>张研究员</div>
               <div style={{ fontSize: 10, color: '#3d5168' }}>实验科学家</div>
             </div>
-            <SettingOutlined style={{ color: '#3d5168', fontSize: 13 }} />
+            <SettingOutlined
+              onClick={e => { e.stopPropagation(); navigate('/system/users') }}
+              style={{ color: '#3d5168', fontSize: 13, cursor: 'pointer' }}
+            />
           </div>
         )}
       </div>
@@ -208,7 +227,19 @@ export default function MainLayout() {
           <Badge count={2} size="small">
             <BellOutlined style={{ color: '#6b8aad', fontSize: 16, cursor: 'pointer' }} />
           </Badge>
-          <UserOutlined style={{ color: '#6b8aad', fontSize: 16, cursor: 'pointer' }} />
+          <Tooltip title="个人中心" placement="bottom">
+            <div
+              onClick={() => navigate('/user/profile')}
+              style={{
+                width: 28, height: 28, borderRadius: '50%', cursor: 'pointer',
+                background: currentPath.startsWith('/user') ? 'linear-gradient(135deg,#7b61ff,#00d4ff)' : 'rgba(123,97,255,0.2)',
+                border: currentPath.startsWith('/user') ? '2px solid #00d4ff' : '2px solid rgba(255,255,255,0.1)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 12, fontWeight: 700, color: '#e8f4ff',
+                transition: 'all 0.15s',
+              }}
+            >张</div>
+          </Tooltip>
         </div>
 
         {/* Page content */}

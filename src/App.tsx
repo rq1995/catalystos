@@ -26,6 +26,8 @@ import Atmosphere from './pages/Atmosphere'
 import FeedingControl from './pages/FeedingControl'
 import Polymerization from './pages/Polymerization'
 import QuenchVent from './pages/QuenchVent'
+import UserProfile from './pages/UserProfile'
+import UserManagement from './pages/UserManagement'
 
 export default function App() {
   return (
@@ -59,6 +61,8 @@ export default function App() {
           <Route path="reports/list" element={<Reports />} />
           <Route path="reports/audit" element={<AuditLog />} />
           <Route path="system/datacollect" element={<DataCollection />} />
+          <Route path="system/users" element={<UserManagement />} />
+          <Route path="user/profile" element={<UserProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>
