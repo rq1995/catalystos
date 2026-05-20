@@ -16,21 +16,15 @@ const menuGroups = [
     items: [{ key: '/dashboard', icon: <HomeOutlined />, label: '首页大屏' }]
   },
   {
-    label: '设备控制',
-    items: [
-      { key: '/devices/topology', icon: <ApartmentOutlined />, label: '设备拓扑总览' },
-      { key: '/devices/agv', icon: <CarOutlined />, label: 'AGV 调度控制' },
-      { key: '/devices/alarms', icon: <AlertOutlined />, label: '告警与联锁' },
-    ]
-  },
-  {
     label: '实时控制中心',
     items: [
       { key: '/control/center', icon: <ControlOutlined />, label: '控制中心总览' },
       { key: '/control/atmosphere', icon: <ApiOutlined />, label: '气氛与水氧' },
+      { key: '/devices/agv', icon: <CarOutlined />, label: 'AGV 调度控制' },
       { key: '/control/feeding', icon: <ExperimentOutlined />, label: '进料与配制' },
       { key: '/control/polymerization', icon: <FireOutlined />, label: '聚合反应控制' },
       { key: '/control/quench', icon: <ThunderboltOutlined />, label: '终止与泄压' },
+      { key: '/devices/alarms', icon: <AlertOutlined />, label: '告警与联锁' },
     ]
   },
   {

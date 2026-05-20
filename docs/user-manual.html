@@ -273,8 +273,11 @@
   <a href="#sec-scheduling" class="l1">3.6 高通量智能排产</a>
   <a href="#sec-al" class="l1">3.7 主动学习迭代</a>
 
-  <div class="toc-section">设备控制</div>
-  <a href="#sec-devices" class="l1">4. 设备控制</a>
+  <div class="toc-section">实时控制中心</div>
+  <a href="#sec-devices" class="l1">4. 实时控制中心</a>
+  <a href="#sec-control-overview" class="l2">4.1 控制中心总览 & 拓扑</a>
+  <a href="#sec-control-agv" class="l2">4.2 AGV 调度控制</a>
+  <a href="#sec-control-alarm" class="l2">4.3 告警与联锁</a>
 
   <div class="toc-section">合规报告</div>
   <a href="#sec-reports" class="l1">5. 报告与审计</a>
@@ -439,6 +442,7 @@
     <div class="mini-card"><div class="mc-title">🧬 主动学习迭代</div><div style="font-size:12px;color:var(--sub);margin-top:6px">每轮实验数据反哺模型，收敛曲线</div></div>
     <div class="mini-card"><div class="mc-title">🔬 催化剂数据库</div><div style="font-size:12px;color:var(--sub);margin-top:6px">200+ 茂金属体系，结构相似性搜索</div></div>
     <div class="mini-card"><div class="mc-title">📊 谱图分析</div><div style="font-size:12px;color:var(--sub);margin-top:6px">GPC/DSC/¹³C NMR/FTIR 谱图展示</div></div>
+    <div class="mini-card"><div class="mc-title">⚙️ 控制中心总览</div><div style="font-size:12px;color:var(--sub);margin-top:6px">设备拓扑 + 32 釜矩阵 + E-Stop，整合原设备拓扑总览</div></div>
     <div class="mini-card"><div class="mc-title">🚗 AGV 调度</div><div style="font-size:12px;color:var(--sub);margin-top:6px">实验室机器人实时路径规划</div></div>
     <div class="mini-card"><div class="mc-title">🔔 告警与联锁</div><div style="font-size:12px;color:var(--sub);margin-top:6px">三级告警，自动联锁保护</div></div>
     <div class="mini-card"><div class="mc-title">📦 物料管理</div><div style="font-size:12px;color:var(--sub);margin-top:6px">库存预警、出入库追踪</div></div>
@@ -494,19 +498,19 @@
       <!-- Menu items -->
       <rect x="4" y="44" width="132" height="20" rx="4" fill="rgba(0,212,255,0.12)" stroke="rgba(0,212,255,0.3)" stroke-width="0.5"/>
       <text x="12" y="57" fill="#00d4ff" font-size="10">🏠 首页大屏</text>
-      <text x="8" y="76" fill="#3d5168" font-size="8" font-weight="600">设备控制</text>
-      <text x="12" y="90" fill="#6b8aad" font-size="10">⚙ 设备拓扑总览</text>
-      <text x="12" y="104" fill="#6b8aad" font-size="10">🚗 AGV 调度控制</text>
-      <text x="12" y="118" fill="#6b8aad" font-size="10">🔔 告警与联锁</text>
-      <text x="8" y="134" fill="#3d5168" font-size="8" font-weight="600">实验中台</text>
-      <text x="12" y="148" fill="#6b8aad" font-size="10">📈 反应过程监控</text>
-      <text x="12" y="162" fill="#6b8aad" font-size="10">🔀 实验方案编排</text>
-      <text x="12" y="176" fill="#6b8aad" font-size="10">📋 实验任务调度</text>
-      <text x="12" y="190" fill="#6b8aad" font-size="10">⚡ 高通量智能排产</text>
-      <text x="8" y="206" fill="#3d5168" font-size="8" font-weight="600">AI 智能中心</text>
-      <text x="12" y="220" fill="#6b8aad" font-size="10">🤖 实验方案推荐</text>
-      <text x="12" y="234" fill="#6b8aad" font-size="10">📊 预测模型管理</text>
-      <text x="12" y="248" fill="#6b8aad" font-size="10">🧬 主动学习迭代</text>
+      <text x="8" y="75" fill="#3d5168" font-size="8" font-weight="600">实时控制中心</text>
+      <text x="12" y="89" fill="#6b8aad" font-size="10">⚙ 控制中心总览</text>
+      <text x="12" y="103" fill="#6b8aad" font-size="10">💨 气氛与水氧</text>
+      <text x="12" y="117" fill="#6b8aad" font-size="10">🚗 AGV 调度控制</text>
+      <text x="12" y="131" fill="#6b8aad" font-size="10">🧪 进料与配制</text>
+      <text x="12" y="145" fill="#6b8aad" font-size="10">🔥 聚合反应控制</text>
+      <text x="12" y="159" fill="#6b8aad" font-size="10">⚡ 终止与泄压</text>
+      <text x="12" y="173" fill="#6b8aad" font-size="10">🔔 告警与联锁</text>
+      <text x="8" y="189" fill="#3d5168" font-size="8" font-weight="600">实验中台</text>
+      <text x="12" y="203" fill="#6b8aad" font-size="10">📈 反应过程监控</text>
+      <text x="12" y="217" fill="#6b8aad" font-size="10">🔀 实验方案编排</text>
+      <text x="12" y="231" fill="#6b8aad" font-size="10">📋 实验任务调度</text>
+      <text x="12" y="245" fill="#6b8aad" font-size="10">🚀 高通量智能排产</text>
 
       <!-- Main area -->
       <rect x="142" y="0" width="618" height="300" rx="0" fill="rgba(8,12,24,0.5)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
@@ -1031,23 +1035,64 @@
   </div>
 </section>
 
-<!-- ═══ 4. DEVICES ═══ -->
+<!-- ═══ 4. REAL-TIME CONTROL CENTER ═══ -->
 <section id="sec-devices" class="section">
-  <h2><span class="h2-num">4</span>设备控制</h2>
+  <h2><span class="h2-num">4</span>实时控制中心</h2>
 
-  <h3>AGV 调度控制</h3>
-  <p>AGV（自动导引车）模块实时展示实验室内 4 台 AGV 机器人的位置、当前任务与电量状态。操作者可手动指派取样/投料/转移任务，系统自动规划最优路径并避免碰撞。</p>
+  <p>实时控制中心将设备监控与操控功能整合为一体，涵盖从气路准备、进料配制、聚合反应到终止泄压的完整实验流程控制链，并内嵌设备拓扑总览与 AGV 调度。</p>
+
+  <p>左侧导航栏"实时控制中心"组包含以下 7 个页面，按工艺流程顺序排列：</p>
+
+  <table>
+    <thead><tr><th>#</th><th>页面</th><th>核心功能</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>控制中心总览</strong></td><td>KPI 总览 + 设备拓扑 & 数字孪生 + 32 釜健康矩阵 + 紧急停车</td></tr>
+      <tr><td>2</td><td>气氛与水氧</td><td>H₂O/O₂ 传感器、真空泵、氮气置换控制</td></tr>
+      <tr><td>3</td><td>AGV 调度控制</td><td>实验室机器人实时位置、任务指派、路径规划</td></tr>
+      <tr><td>4</td><td>进料与配制</td><td>注射泵、天平闭环、多位阀、溶剂/催化剂配制</td></tr>
+      <tr><td>5</td><td>聚合反应控制</td><td>MFC 气体流量、TCU 温度 PID、搅拌转速扭矩</td></tr>
+      <tr><td>6</td><td>终止与泄压</td><td>终止剂泵、背压阀、安全泄放操作</td></tr>
+      <tr><td>7</td><td>告警与联锁</td><td>三级告警管理、联锁触发记录、处置确认</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec-control-overview">4.1 控制中心总览 & 设备拓扑</h3>
+  <p>控制中心总览是进入实验室后的核心操控界面，整合了原"设备拓扑总览"的内容，一个页面内完成以下操作：</p>
+
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+    <div class="card">
+      <h4>🖥️ 设备拓扑 & 数字孪生</h4>
+      <p>SVG 实时拓扑图展示 GPC/DSC/NMR/IR 分析仪器状态、数据总线、32 台反应釜 A/B 区节点，以及机械臂和 AGV 停靠点。</p>
+      <p>点击任意反应釜节点，右侧面板实时显示该釜的温度/压力/转速/液位参数，并可直接跳转至聚合反应控制页。</p>
+    </div>
+    <div class="card">
+      <h4>⚙️ 32 釜健康度矩阵</h4>
+      <p>每台反应釜显示 MFC（质量流量）、TCU（温控）、扭矩传感器、阀门四维健康条，一眼识别异常设备。</p>
+      <p>点击釜格直接进入该釜的聚合反应控制页，并同步高亮拓扑图中的对应节点。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">🛑</div>
+    <div class="callout-body"><strong>紧急停车（EMERGENCY STOP）</strong>控制中心总览右下角常驻红色 E-Stop 按钮。激活后系统立即切断所有进气阀、关闭加热回路、启动冷却保护，界面顶部出现红色告警横幅，所有控制操作被禁用直至人工复位。</div>
+  </div>
+
+  <h3 id="sec-control-agv">4.2 AGV 调度控制</h3>
+  <p>AGV（自动导引车）模块实时展示实验室内 4 台 AGV 机器人的位置、当前任务与电量状态。</p>
 
   <table>
     <thead><tr><th>操作</th><th>步骤</th></tr></thead>
     <tbody>
-      <tr><td>手动指派任务</td><td>在地图上点击目标位置 → 选择 AGV → 选择任务类型 → 确认执行</td></tr>
+      <tr><td>手动指派任务</td><td>在地图上点击目标位置 → 选择 AGV → 选择任务类型（取样/投料/转移）→ 确认执行</td></tr>
       <tr><td>紧急停止 AGV</td><td>点击 AGV 图标 → 选择"紧急停止"→ 确认（AGV 就地制动）</td></tr>
       <tr><td>充电调度</td><td>电量 &lt; 20% 时系统自动安排充电；也可手动"返回充电桩"</td></tr>
+      <tr><td>路径冲突</td><td>系统自动检测碰撞风险并重新规划路径，无需人工干预</td></tr>
     </tbody>
   </table>
 
-  <h3>告警与联锁三级分类</h3>
+  <h3 id="sec-control-alarm">4.3 告警与联锁三级分类</h3>
+  <p>告警与联锁页（工艺流程最末位）汇总所有设备的告警事件，支持按级别过滤、批量确认和历史回溯。</p>
+
   <table>
     <thead><tr><th>级别</th><th>名称</th><th>触发条件</th><th>响应要求</th></tr></thead>
     <tbody>
@@ -1071,6 +1116,36 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Alarm flow SVG (reused from earlier but placed here) -->
+  <div class="svg-container">
+    <svg width="100%" height="110" viewBox="0 0 680 110">
+      <rect x="0"   y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.12)"  stroke="#ff4757" stroke-width="1.5"/>
+      <text x="45"  y="47" fill="#ff4757" font-size="10" text-anchor="middle">超温/超压</text>
+      <text x="45"  y="60" fill="#ff4757" font-size="10" text-anchor="middle">触发报警</text>
+      <rect x="120" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
+      <text x="165" y="47" fill="#ffb800" font-size="10" text-anchor="middle">系统自动</text>
+      <text x="165" y="60" fill="#ffb800" font-size="10" text-anchor="middle">检测确认</text>
+      <rect x="240" y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.10)"  stroke="#ff4757" stroke-width="1.5"/>
+      <text x="285" y="47" fill="#ff4757" font-size="10" text-anchor="middle">联锁触发</text>
+      <text x="285" y="60" fill="#ff4757" font-size="10" text-anchor="middle">自动切断</text>
+      <rect x="360" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
+      <text x="405" y="47" fill="#ffb800" font-size="10" text-anchor="middle">推送通知</text>
+      <text x="405" y="60" fill="#ffb800" font-size="10" text-anchor="middle">短信/铃声</text>
+      <rect x="480" y="25" width="90"  height="50" rx="6" fill="rgba(0,255,136,0.10)"  stroke="#00ff88" stroke-width="1.5"/>
+      <text x="525" y="47" fill="#00ff88" font-size="10" text-anchor="middle">工程师</text>
+      <text x="525" y="60" fill="#00ff88" font-size="10" text-anchor="middle">现场处置</text>
+      <rect x="600" y="25" width="80"  height="50" rx="6" fill="rgba(0,212,255,0.10)"  stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="640" y="47" fill="#00d4ff" font-size="10" text-anchor="middle">恢复生产</text>
+      <text x="640" y="60" fill="#00d4ff" font-size="10" text-anchor="middle">或放弃批次</text>
+      <line x1="90"  y1="50" x2="120" y2="50" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="210" y1="50" x2="240" y2="50" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="330" y1="50" x2="360" y2="50" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="450" y1="50" x2="480" y2="50" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="570" y1="50" x2="600" y2="50" stroke="#00ff88" stroke-width="1.5"/>
+    </svg>
+    <div class="svg-title">图 4.3-1 告警联锁响应流程</div>
+  </div>
 </section>
 
 <!-- ═══ 5. REPORTS ═══ -->
