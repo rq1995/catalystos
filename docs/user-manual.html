@@ -282,8 +282,14 @@
   <div class="toc-section">合规报告</div>
   <a href="#sec-reports" class="l1">5. 报告与审计</a>
 
+  <div class="toc-section">用户与账号</div>
+  <a href="#sec-userprofile" class="l1">6. 个人中心 & 账号管理</a>
+  <a href="#sec-profile-tabs" class="l2">6.1 个人中心功能</a>
+  <a href="#sec-user-mgmt" class="l2">6.2 账号管理（管理员）</a>
+  <a href="#sec-roles-matrix" class="l2">6.3 角色权限详解</a>
+
   <div class="toc-section">支持</div>
-  <a href="#sec-faq" class="l1">6. 常见问题</a>
+  <a href="#sec-faq" class="l1">7. 常见问题</a>
   <a href="#sec-appendix" class="l1">附录</a>
 </nav>
 
@@ -334,8 +340,8 @@
   <div class="cover-sub">AI 驱动的茂金属催化剂智能实验室平台 — 完整操作指南</div>
 
   <div class="cover-meta">
-    <div class="cover-meta-item"><strong>文档版本</strong>v1.0.0</div>
-    <div class="cover-meta-item"><strong>发布日期</strong>2026-05-18</div>
+    <div class="cover-meta-item"><strong>文档版本</strong>v1.1.0</div>
+    <div class="cover-meta-item"><strong>发布日期</strong>2026-05-19</div>
     <div class="cover-meta-item"><strong>适用版本</strong>CatalystOS 2.x</div>
     <div class="cover-meta-item"><strong>文档状态</strong><span class="badge badge-green">正式发布</span></div>
   </div>
@@ -447,6 +453,8 @@
     <div class="mini-card"><div class="mc-title">🔔 告警与联锁</div><div style="font-size:12px;color:var(--sub);margin-top:6px">三级告警，自动联锁保护</div></div>
     <div class="mini-card"><div class="mc-title">📦 物料管理</div><div style="font-size:12px;color:var(--sub);margin-top:6px">库存预警、出入库追踪</div></div>
     <div class="mini-card"><div class="mc-title">📋 报告 & 审计</div><div style="font-size:12px;color:var(--sub);margin-top:6px">自动报告生成，防篡改审计日志</div></div>
+    <div class="mini-card"><div class="mc-title">👤 个人中心</div><div style="font-size:12px;color:var(--sub);margin-top:6px">个人信息、安全设置、通知偏好、登录记录</div></div>
+    <div class="mini-card"><div class="mc-title">👥 账号管理</div><div style="font-size:12px;color:var(--sub);margin-top:6px">用户列表、角色分配、权限矩阵（管理员专属）</div></div>
   </div>
 </section>
 
@@ -1175,9 +1183,260 @@
   </div>
 </section>
 
-<!-- ═══ 6. FAQ ═══ -->
+<!-- ═══ 6. USER PROFILE & ACCOUNT MANAGEMENT ═══ -->
+<section id="sec-userprofile" class="section">
+  <h2><span class="h2-num">6</span>个人中心 & 账号管理</h2>
+
+  <p>CatalystOS 提供完善的用户身份体系，每位用户拥有独立的个人中心，管理员可通过账号管理模块统一管控全部用户的权限与状态。</p>
+
+  <h3 id="sec-profile-tabs">6.1 个人中心功能</h3>
+  <p>点击顶栏右上角头像，或侧边栏底部用户卡片，均可进入个人中心 <code style="background:rgba(0,212,255,0.08);color:#00d4ff;padding:1px 6px;border-radius:4px;font-size:12px">/user/profile</code>。</p>
+
+  <!-- Profile layout SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="240" viewBox="0 0 760 240">
+      <!-- Profile card top -->
+      <rect x="0" y="0" width="760" height="68" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Avatar -->
+      <circle cx="44" cy="34" r="26" fill="url(#grd1)" opacity="0.9"/>
+      <text x="44" y="39" fill="white" font-size="14" font-weight="700" text-anchor="middle">张</text>
+      <circle cx="62" cy="52" r="5" fill="#00ff88"/>
+      <!-- Name + role -->
+      <text x="80" y="22" fill="#e8f4ff" font-size="14" font-weight="700">张研究员</text>
+      <text x="80" y="38" fill="#6b8aad" font-size="11">催化材料研究室 · 实验科学家</text>
+      <text x="80" y="54" fill="#6b8aad" font-size="10">zhang.wei@catalystos.ai  ·  加入于 2023-03-15</text>
+      <!-- Stats -->
+      <rect x="540" y="8" width="50" height="52" rx="6" fill="rgba(0,212,255,0.06)" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+      <text x="565" y="28" fill="#00d4ff" font-size="16" font-weight="800" text-anchor="middle">312</text>
+      <text x="565" y="50" fill="#6b8aad" font-size="9" text-anchor="middle">实验批次</text>
+      <rect x="598" y="8" width="50" height="52" rx="6" fill="rgba(123,97,255,0.06)" stroke="rgba(123,97,255,0.15)" stroke-width="1"/>
+      <text x="623" y="28" fill="#7b61ff" font-size="16" font-weight="800" text-anchor="middle">47</text>
+      <text x="623" y="50" fill="#6b8aad" font-size="9" text-anchor="middle">报告生成</text>
+      <rect x="656" y="8" width="50" height="52" rx="6" fill="rgba(0,255,136,0.06)" stroke="rgba(0,255,136,0.15)" stroke-width="1"/>
+      <text x="681" y="28" fill="#00ff88" font-size="16" font-weight="800" text-anchor="middle">418</text>
+      <text x="681" y="50" fill="#6b8aad" font-size="9" text-anchor="middle">活跃天数</text>
+
+      <!-- Tab bar -->
+      <rect x="0" y="78" width="100" height="145" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="0" y="94" width="3" height="22" rx="1" fill="#00d4ff"/>
+      <rect x="0" y="94" width="100" height="22" fill="rgba(0,212,255,0.08)"/>
+      <text x="14" y="108" fill="#00d4ff" font-size="10">👤 基本信息</text>
+      <text x="14" y="130" fill="#6b8aad" font-size="10">🔒 安全设置</text>
+      <text x="14" y="152" fill="#6b8aad" font-size="10">🔔 通知偏好</text>
+      <text x="14" y="174" fill="#6b8aad" font-size="10">📋 登录记录</text>
+
+      <!-- Tab content: 基本信息 -->
+      <rect x="108" y="78" width="652" height="145" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <text x="120" y="98" fill="#e8f4ff" font-size="12" font-weight="600">基本信息</text>
+      <!-- Fields grid -->
+      <rect x="120" y="108" width="190" height="28" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="130" y="120" fill="#6b8aad" font-size="8">姓名</text>
+      <text x="130" y="130" fill="#e8f4ff" font-size="10">张研究员</text>
+      <rect x="320" y="108" width="190" height="28" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="330" y="120" fill="#6b8aad" font-size="8">邮箱</text>
+      <text x="330" y="130" fill="#e8f4ff" font-size="10">zhang.wei@catalystos.ai</text>
+      <rect x="120" y="144" width="190" height="28" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="130" y="156" fill="#6b8aad" font-size="8">部门</text>
+      <text x="130" y="166" fill="#e8f4ff" font-size="10">催化材料研究室</text>
+      <rect x="320" y="144" width="190" height="28" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="330" y="156" fill="#6b8aad" font-size="8">角色</text>
+      <text x="330" y="166" fill="#00d4ff" font-size="10">实验科学家  🔒系统锁定</text>
+      <!-- Edit button -->
+      <rect x="630" y="90" width="60" height="22" rx="5" fill="rgba(0,212,255,0.1)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+      <text x="660" y="104" fill="#00d4ff" font-size="10" text-anchor="middle">✏ 编辑</text>
+    </svg>
+    <div class="svg-title">图 6.1-1 个人中心页面布局（顶部 Profile 卡片 + 左侧 Tab + 右侧内容区）</div>
+  </div>
+
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+    <div class="card">
+      <h4>👤 基本信息</h4>
+      <p>编辑姓名、英文名、手机号、所属部门、个人简介。<strong>职务角色</strong>由管理员配置，系统锁定不可自行修改。编辑完成后点击"保存"生效。</p>
+      <p>底部展示账号元数据：用户 ID、注册日期、最近登录时间（只读）。</p>
+    </div>
+    <div class="card">
+      <h4>🔒 安全设置</h4>
+      <p><strong>修改密码</strong>：需输入当前密码 + 新密码（至少 10 位，含大小写/数字/特殊字符）。</p>
+      <p><strong>两步验证（2FA）</strong>：支持 TOTP Authenticator App 和短信验证码，建议至少开启一种。</p>
+      <p><strong>API 访问令牌</strong>：为 Jupyter、CI/CD 等外部工具生成 Token，可设只读或读写权限，随时撤销。</p>
+    </div>
+    <div class="card">
+      <h4>🔔 通知偏好</h4>
+      <p>按事件类型独立配置邮件 / 短信 / 站内通知三个渠道：</p>
+      <ul style="color:var(--sub);font-size:13px;padding-left:18px;line-height:2;">
+        <li>L3 严重告警（推荐全部开启）</li>
+        <li>L2 预警通知</li>
+        <li>AI 推荐新方案</li>
+        <li>实验报告生成完成</li>
+        <li>预测模型更新</li>
+        <li>物料库存预警</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>📋 登录记录</h4>
+      <p>展示最近 30 天所有登录事件，包含时间、IP 地址、设备/浏览器信息、地理位置和登录状态。</p>
+      <p><strong>失败记录</strong>以红色背景高亮，并在底部给出安全建议（如开启 2FA、修改密码）。当前活跃会话标注"当前"蓝色徽章。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>快速进入个人中心的三种方式</strong>
+      ① 点击顶栏右上角头像圆圈；
+      ② 点击侧边栏底部用户卡片；
+      ③ 直接访问 <code style="color:#00d4ff">/user/profile</code>。
+    </div>
+  </div>
+
+  <h3 id="sec-user-mgmt">6.2 账号管理（管理员专属）</h3>
+  <p>账号管理页 <code style="background:rgba(0,212,255,0.08);color:#00d4ff;padding:1px 6px;border-radius:4px;font-size:12px">/system/users</code> 仅系统管理员可访问，提供平台用户的全生命周期管理。</p>
+
+  <!-- User management SVG -->
+  <div class="svg-container">
+    <svg width="100%" height="200" viewBox="0 0 760 200">
+      <!-- Stats row -->
+      <rect x="0"   y="0" width="110" height="44" rx="6" fill="rgba(0,212,255,0.06)"  stroke="rgba(0,212,255,0.15)"  stroke-width="1"/>
+      <text x="10"  y="16" fill="#6b8aad" font-size="9">总用户数</text>
+      <text x="10"  y="36" fill="#00d4ff" font-size="20" font-weight="800">8</text>
+      <rect x="118" y="0" width="110" height="44" rx="6" fill="rgba(0,255,136,0.06)"  stroke="rgba(0,255,136,0.15)"  stroke-width="1"/>
+      <text x="128" y="16" fill="#6b8aad" font-size="9">活跃用户</text>
+      <text x="128" y="36" fill="#00ff88" font-size="20" font-weight="800">6</text>
+      <rect x="236" y="0" width="110" height="44" rx="6" fill="rgba(255,71,87,0.06)"  stroke="rgba(255,71,87,0.15)"   stroke-width="1"/>
+      <text x="246" y="16" fill="#6b8aad" font-size="9">系统管理员</text>
+      <text x="246" y="36" fill="#ff4757" font-size="20" font-weight="800">1</text>
+      <rect x="354" y="0" width="110" height="44" rx="6" fill="rgba(0,212,255,0.06)"  stroke="rgba(0,212,255,0.15)"  stroke-width="1"/>
+      <text x="364" y="16" fill="#6b8aad" font-size="9">实验科学家</text>
+      <text x="364" y="36" fill="#00d4ff" font-size="20" font-weight="800">4</text>
+      <rect x="472" y="0" width="110" height="44" rx="6" fill="rgba(255,184,0,0.06)"  stroke="rgba(255,184,0,0.15)"   stroke-width="1"/>
+      <text x="482" y="16" fill="#6b8aad" font-size="9">设备工程师</text>
+      <text x="482" y="36" fill="#ffb800" font-size="20" font-weight="800">2</text>
+      <rect x="590" y="0" width="110" height="44" rx="6" fill="rgba(107,138,173,0.1)" stroke="rgba(107,138,173,0.2)"  stroke-width="1"/>
+      <text x="600" y="16" fill="#6b8aad" font-size="9">只读访客</text>
+      <text x="600" y="36" fill="#6b8aad" font-size="20" font-weight="800">1</text>
+
+      <!-- Table header -->
+      <rect x="0" y="56" width="760" height="24" rx="4" fill="rgba(0,212,255,0.04)"/>
+      <text x="10"  y="72" fill="#6b8aad" font-size="10">用户</text>
+      <text x="200" y="72" fill="#6b8aad" font-size="10">角色</text>
+      <text x="310" y="72" fill="#6b8aad" font-size="10">部门</text>
+      <text x="470" y="72" fill="#6b8aad" font-size="10">最近登录</text>
+      <text x="590" y="72" fill="#6b8aad" font-size="10">状态</text>
+      <text x="660" y="72" fill="#6b8aad" font-size="10">操作</text>
+
+      <!-- Row 1 -->
+      <rect x="0" y="82" width="760" height="28" rx="0" fill="transparent"/>
+      <circle cx="22" cy="96" r="11" fill="rgba(0,212,255,0.3)" stroke="rgba(0,212,255,0.4)" stroke-width="1"/>
+      <text x="22" y="100" fill="#e8f4ff" font-size="9" text-anchor="middle">张</text>
+      <text x="42" y="93" fill="#e8f4ff" font-size="11" font-weight="500">张研究员</text>
+      <text x="42" y="106" fill="#6b8aad" font-size="9">zhang.wei@catalystos.ai</text>
+      <rect x="198" y="87" width="58" height="16" rx="4" fill="rgba(0,212,255,0.15)" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+      <text x="227" y="98" fill="#00d4ff" font-size="9" text-anchor="middle">实验科学家</text>
+      <text x="308" y="98" fill="#6b8aad" font-size="10">催化材料研究室</text>
+      <text x="468" y="98" fill="#6b8aad" font-size="10" font-family="monospace">2026-05-19 09:12</text>
+      <circle cx="595" cy="96" r="4" fill="#00ff88"/>
+      <rect x="602" y="87" width="32" height="16" rx="4" fill="rgba(0,255,136,0.12)"/>
+      <text x="618" y="98" fill="#00ff88" font-size="9" text-anchor="middle">正常</text>
+      <text x="658" y="98" fill="#00d4ff" font-size="10">编辑</text>
+      <text x="690" y="98" fill="#ffb800" font-size="10">停用</text>
+
+      <!-- Row 2 -->
+      <circle cx="22" cy="128" r="11" fill="rgba(255,71,87,0.3)" stroke="rgba(255,71,87,0.4)" stroke-width="1"/>
+      <text x="22" y="132" fill="#e8f4ff" font-size="9" text-anchor="middle">李</text>
+      <text x="42" y="125" fill="#e8f4ff" font-size="11" font-weight="500">李管理员</text>
+      <text x="42" y="138" fill="#6b8aad" font-size="9">li.admin@catalystos.ai</text>
+      <rect x="198" y="119" width="58" height="16" rx="4" fill="rgba(255,71,87,0.15)" stroke="rgba(255,71,87,0.3)" stroke-width="1"/>
+      <text x="227" y="130" fill="#ff4757" font-size="9" text-anchor="middle">系统管理员</text>
+      <text x="308" y="130" fill="#6b8aad" font-size="10">平台运维组</text>
+      <text x="468" y="130" fill="#6b8aad" font-size="10" font-family="monospace">2026-05-19 08:55</text>
+      <circle cx="595" cy="128" r="4" fill="#00ff88"/>
+      <rect x="602" y="119" width="32" height="16" rx="4" fill="rgba(0,255,136,0.12)"/>
+      <text x="618" y="130" fill="#00ff88" font-size="9" text-anchor="middle">正常</text>
+      <text x="658" y="130" fill="#00d4ff" font-size="10">编辑</text>
+
+      <!-- Row 3 (locked) -->
+      <circle cx="22" cy="161" r="11" fill="rgba(255,71,87,0.15)" stroke="rgba(255,71,87,0.2)" stroke-width="1"/>
+      <text x="22" y="165" fill="#6b8aad" font-size="9" text-anchor="middle">孙</text>
+      <text x="42" y="158" fill="#6b8aad" font-size="11">孙工程师</text>
+      <text x="42" y="171" fill="#3d5168" font-size="9">sun.eng@catalystos.ai</text>
+      <rect x="198" y="152" width="58" height="16" rx="4" fill="rgba(255,184,0,0.12)" stroke="rgba(255,184,0,0.25)" stroke-width="1"/>
+      <text x="227" y="163" fill="#ffb800" font-size="9" text-anchor="middle">设备工程师</text>
+      <text x="308" y="163" fill="#6b8aad" font-size="10">设备维护组</text>
+      <text x="468" y="163" fill="#6b8aad" font-size="10" font-family="monospace">2026-05-01 11:15</text>
+      <circle cx="595" cy="161" r="4" fill="#ff4757"/>
+      <rect x="602" y="152" width="40" height="16" rx="4" fill="rgba(255,71,87,0.12)"/>
+      <text x="622" y="163" fill="#ff4757" font-size="9" text-anchor="middle">已锁定</text>
+      <text x="658" y="163" fill="#00d4ff" font-size="10">编辑</text>
+      <text x="690" y="163" fill="#00ff88" font-size="10">启用</text>
+    </svg>
+    <div class="svg-title">图 6.2-1 账号管理页面 — 统计卡片 + 用户表格示意</div>
+  </div>
+
+  <h4>主要操作说明</h4>
+  <table>
+    <thead><tr><th>操作</th><th>路径</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>新增用户</td><td>点击"+ 新增用户"</td><td>填写姓名/邮箱/部门/角色，系统自动生成随机初始密码发至邮箱，用户首次登录强制修改</td></tr>
+      <tr><td>编辑用户</td><td>行末"编辑"→ 右侧抽屉</td><td>修改字段、切换角色、查看权限模块可视化、切换账号状态（启用/停用）</td></tr>
+      <tr><td>重置密码</td><td>编辑抽屉 → "重置密码"</td><td>触发系统发送重置链接至用户邮箱，旧密码立即失效</td></tr>
+      <tr><td>停用/启用</td><td>行末操作 或 编辑抽屉 Toggle</td><td>停用后用户立即无法登录，历史数据保留不删除；管理员账号不可被停用</td></tr>
+      <tr><td>搜索过滤</td><td>顶部搜索栏 + 角色筛选</td><td>支持姓名/邮箱/部门模糊搜索，同时按角色类型过滤</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec-roles-matrix">6.3 角色权限详解</h3>
+  <p>平台内置四种角色，权限逐级收缩：</p>
+
+  <div class="svg-container">
+    <svg width="100%" height="160" viewBox="0 0 760 160">
+      <!-- Role cards -->
+      <rect x="0"   y="10" width="170" height="130" rx="8" fill="rgba(255,71,87,0.06)"  stroke="rgba(255,71,87,0.2)"  stroke-width="1"/>
+      <text x="85"  y="32" fill="#ff4757" font-size="12" font-weight="700" text-anchor="middle">🛡 系统管理员</text>
+      <text x="85"  y="50" fill="#ff4757" font-size="10" text-anchor="middle">全模块读写</text>
+      <text x="10"  y="68" fill="#6b8aad" font-size="9">✓ 账号管理</text>
+      <text x="10"  y="82" fill="#6b8aad" font-size="9">✓ 系统配置</text>
+      <text x="10"  y="96" fill="#6b8aad" font-size="9">✓ 实验控制</text>
+      <text x="10" y="110" fill="#6b8aad" font-size="9">✓ 数据导出</text>
+      <text x="10" y="124" fill="#6b8aad" font-size="9">✓ 审计日志</text>
+
+      <rect x="196" y="10" width="170" height="130" rx="8" fill="rgba(0,212,255,0.06)"  stroke="rgba(0,212,255,0.2)"  stroke-width="1"/>
+      <text x="281" y="32" fill="#00d4ff" font-size="12" font-weight="700" text-anchor="middle">🔬 实验科学家</text>
+      <text x="281" y="50" fill="#00d4ff" font-size="10" text-anchor="middle">实验全链路</text>
+      <text x="206" y="68" fill="#6b8aad" font-size="9">✓ 实验中台全模块</text>
+      <text x="206" y="82" fill="#6b8aad" font-size="9">✓ AI 智能中心</text>
+      <text x="206" y="96" fill="#6b8aad" font-size="9">✓ 数据分析</text>
+      <text x="206" y="110" fill="#6b8aad" font-size="9">✓ 知识库读写</text>
+      <text x="206" y="124" fill="#3d5168" font-size="9">✗ 设备联锁配置</text>
+
+      <rect x="392" y="10" width="170" height="130" rx="8" fill="rgba(255,184,0,0.06)"  stroke="rgba(255,184,0,0.2)"   stroke-width="1"/>
+      <text x="477" y="32" fill="#ffb800" font-size="12" font-weight="700" text-anchor="middle">⚙ 设备工程师</text>
+      <text x="477" y="50" fill="#ffb800" font-size="10" text-anchor="middle">设备控制与维护</text>
+      <text x="402" y="68" fill="#6b8aad" font-size="9">✓ 实时控制中心</text>
+      <text x="402" y="82" fill="#6b8aad" font-size="9">✓ 告警与联锁</text>
+      <text x="402" y="96" fill="#6b8aad" font-size="9">✓ 数据采集配置</text>
+      <text x="402" y="110" fill="#3d5168" font-size="9">✗ 实验方案编排</text>
+      <text x="402" y="124" fill="#3d5168" font-size="9">✗ AI 推荐</text>
+
+      <rect x="588" y="10" width="170" height="130" rx="8" fill="rgba(107,138,173,0.08)" stroke="rgba(107,138,173,0.2)" stroke-width="1"/>
+      <text x="673" y="32" fill="#6b8aad" font-size="12" font-weight="700" text-anchor="middle">👁 只读访客</text>
+      <text x="673" y="50" fill="#6b8aad" font-size="10" text-anchor="middle">仅查看</text>
+      <text x="598" y="68" fill="#6b8aad" font-size="9">✓ 首页大屏</text>
+      <text x="598" y="82" fill="#6b8aad" font-size="9">✓ 数据大屏（只读）</text>
+      <text x="598" y="96" fill="#3d5168" font-size="9">✗ 所有操作功能</text>
+      <text x="598" y="110" fill="#3d5168" font-size="9">✗ 数据导出</text>
+      <text x="598" y="124" fill="#3d5168" font-size="9">✗ 知识库</text>
+    </svg>
+    <div class="svg-title">图 6.3-1 四种角色权限对比（从左到右权限逐级收缩）</div>
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>角色修改注意事项</strong>角色变更立即生效，用户当前活跃的 Session 会在下次页面跳转时同步新权限。降级操作（如科学家→访客）会导致用户正在操作的功能页面出现"无权限"提示，建议在非工作时段执行。</div>
+  </div>
+</section>
+
+<!-- ═══ 7. FAQ ═══ -->
 <section id="sec-faq" class="section">
-  <h2><span class="h2-num">6</span>常见问题</h2>
+  <h2><span class="h2-num">7</span>常见问题</h2>
 
   <div class="faq-item">
     <div class="faq-q">设备离线，为何界面仍显示"正常"状态？</div>
@@ -1208,11 +1467,21 @@
     <div class="faq-q">如何导出某个催化剂体系的全部历史实验数据？</div>
     <div class="faq-a">进入"催化剂数据库" → 搜索催化剂名称 → 进入详情页 → 点击"导出关联实验数据"，选择时间范围和导出字段，系统会生成 CSV 压缩包供下载。如需 PDF 格式批量报告，请联系管理员开通批量导出权限。</div>
   </div>
+
+  <div class="faq-item">
+    <div class="faq-q">忘记密码了怎么办？</div>
+    <div class="faq-a">在登录页点击"忘记密码"，输入注册邮箱后系统发送重置链接，链接有效期 30 分钟。也可联系管理员在账号管理页执行"重置密码"操作，系统将发送临时密码至邮箱。</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">我的账号被锁定，怎么解锁？</div>
+    <div class="faq-a">连续 5 次密码输入错误后账号自动锁定，需由系统管理员在"账号管理"页面将账号状态切换回"正常"。锁定期间所有 API Token 也同步失效，解锁后需重新生成。</div>
+  </div>
 </section>
 
 <!-- ═══ APPENDIX ═══ -->
 <section id="sec-appendix" class="section">
-  <h2><span class="h2-num">附</span>附录</h2>
+  <h2><span class="h2-num">A</span>附录</h2>
 
   <h3>关键术语表</h3>
   <table>
@@ -1253,12 +1522,13 @@
       <tr><td>催化剂数据库</td><td>✅ 读写</td><td>✅ 读写</td><td>👁 只读</td><td>👁 只读</td></tr>
       <tr><td>实验报告导出</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
       <tr><td>操作审计日志</td><td>✅ 读写</td><td>👁 只读</td><td>👁 只读</td><td>❌</td></tr>
-      <tr><td>用户权限管理</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+      <tr><td>个人中心</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+      <tr><td>账号管理</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
     </tbody>
   </table>
 
   <div style="margin-top:40px;padding:20px;border:1px solid var(--border);border-radius:8px;text-align:center;background:var(--card);">
-    <div style="font-size:12px;color:var(--dim);">CatalystOS 用户使用手册 v1.0</div>
+    <div style="font-size:12px;color:var(--dim);">CatalystOS 用户使用手册 v1.1</div>
     <div style="font-size:12px;color:var(--dim);margin-top:4px;">© 2026 CatalystOS Team · 技术支持请联系 support@catalystos.ai</div>
     <div style="margin-top:12px;">
       <span class="badge badge-cyan">React 18</span>&nbsp;
