@@ -264,20 +264,20 @@
   <a href="#sec-nav" class="l2">2.2 界面导航</a>
   <a href="#sec-demo" class="l2">2.3 演示路径</a>
 
-  <div class="toc-section">核心功能</div>
-  <a href="#sec-ai" class="l1">3.1 AI 方案推荐</a>
-  <a href="#sec-orch" class="l1">3.2 实验方案编排</a>
-  <a href="#sec-monitor" class="l1">3.3 反应过程监控</a>
-  <a href="#sec-analysis" class="l1">3.4 谱图分析仪器</a>
-  <a href="#sec-catdb" class="l1">3.5 催化剂数据库</a>
-  <a href="#sec-scheduling" class="l1">3.6 高通量智能排产</a>
-  <a href="#sec-al" class="l1">3.7 主动学习迭代</a>
-
   <div class="toc-section">实时控制中心</div>
-  <a href="#sec-devices" class="l1">4. 实时控制中心</a>
-  <a href="#sec-control-overview" class="l2">4.1 控制中心总览 & 拓扑</a>
-  <a href="#sec-control-agv" class="l2">4.2 AGV 调度控制</a>
-  <a href="#sec-control-alarm" class="l2">4.3 告警与联锁</a>
+  <a href="#sec-devices" class="l1">3. 实时控制中心</a>
+  <a href="#sec-control-overview" class="l2">3.1 控制中心总览 & 拓扑</a>
+  <a href="#sec-control-agv" class="l2">3.2 AGV 调度控制</a>
+  <a href="#sec-control-alarm" class="l2">3.3 告警与联锁</a>
+
+  <div class="toc-section">核心功能</div>
+  <a href="#sec-ai" class="l1">4.1 AI 方案推荐</a>
+  <a href="#sec-orch" class="l1">4.2 实验方案编排</a>
+  <a href="#sec-monitor" class="l1">4.3 反应过程监控</a>
+  <a href="#sec-analysis" class="l1">4.4 谱图分析仪器</a>
+  <a href="#sec-catdb" class="l1">4.5 催化剂数据库</a>
+  <a href="#sec-scheduling" class="l1">4.6 高通量智能排产</a>
+  <a href="#sec-al" class="l1">4.7 主动学习迭代</a>
 
   <div class="toc-section">合规报告</div>
   <a href="#sec-reports" class="l1">5. 报告与审计</a>
@@ -620,9 +620,122 @@
   <p>按照以上 8 步流程完整走一遍，可在 10 分钟内体验 CatalystOS 全链路核心功能。建议从 <strong>AI 智能中心 → 实验方案推荐</strong> 开始。</p>
 </section>
 
-<!-- ═══ 3.1 AI RECOMMENDATION ═══ -->
+<!-- ═══ 3. REAL-TIME CONTROL CENTER ═══ -->
+<section id="sec-devices" class="section">
+  <h2><span class="h2-num">3</span>实时控制中心</h2>
+
+  <p>实时控制中心将设备监控与操控功能整合为一体，涵盖从气路准备、进料配制、聚合反应到终止泄压的完整实验流程控制链，并内嵌设备拓扑总览与 AGV 调度。</p>
+
+  <p>左侧导航栏"实时控制中心"组包含以下 7 个页面，按工艺流程顺序排列：</p>
+
+  <table>
+    <thead><tr><th>#</th><th>页面</th><th>核心功能</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>控制中心总览</strong></td><td>KPI 总览 + 设备拓扑 & 数字孪生 + 32 釜健康矩阵 + 紧急停车</td></tr>
+      <tr><td>2</td><td>气氛与水氧</td><td>H₂O/O₂ 传感器、真空泵、氮气置换控制</td></tr>
+      <tr><td>3</td><td>AGV 调度控制</td><td>实验室机器人实时位置、任务指派、路径规划</td></tr>
+      <tr><td>4</td><td>进料与配制</td><td>注射泵、天平闭环、多位阀、溶剂/催化剂配制</td></tr>
+      <tr><td>5</td><td>聚合反应控制</td><td>MFC 气体流量、TCU 温度 PID、搅拌转速扭矩</td></tr>
+      <tr><td>6</td><td>终止与泄压</td><td>终止剂泵、背压阀、安全泄放操作</td></tr>
+      <tr><td>7</td><td>告警与联锁</td><td>三级告警管理、联锁触发记录、处置确认</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec-control-overview">3.1 控制中心总览 & 设备拓扑</h3>
+  <p>控制中心总览是进入实验室后的核心操控界面，整合了原"设备拓扑总览"的内容，一个页面内完成以下操作：</p>
+
+  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+    <div class="card">
+      <h4>🖥️ 设备拓扑 & 数字孪生</h4>
+      <p>SVG 实时拓扑图展示 GPC/DSC/NMR/IR 分析仪器状态、数据总线、32 台反应釜 A/B 区节点，以及机械臂和 AGV 停靠点。</p>
+      <p>点击任意反应釜节点，右侧面板实时显示该釜的温度/压力/转速/液位参数，并可直接跳转至聚合反应控制页。</p>
+    </div>
+    <div class="card">
+      <h4>⚙️ 32 釜健康度矩阵</h4>
+      <p>每台反应釜显示 MFC（质量流量）、TCU（温控）、扭矩传感器、阀门四维健康条，一眼识别异常设备。</p>
+      <p>点击釜格直接进入该釜的聚合反应控制页，并同步高亮拓扑图中的对应节点。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-danger">
+    <div class="callout-icon">🛑</div>
+    <div class="callout-body"><strong>紧急停车（EMERGENCY STOP）</strong>控制中心总览右下角常驻红色 E-Stop 按钮。激活后系统立即切断所有进气阀、关闭加热回路、启动冷却保护，界面顶部出现红色告警横幅，所有控制操作被禁用直至人工复位。</div>
+  </div>
+
+  <h3 id="sec-control-agv">3.2 AGV 调度控制</h3>
+  <p>AGV（自动导引车）模块实时展示实验室内 4 台 AGV 机器人的位置、当前任务与电量状态。</p>
+
+  <table>
+    <thead><tr><th>操作</th><th>步骤</th></tr></thead>
+    <tbody>
+      <tr><td>手动指派任务</td><td>在地图上点击目标位置 → 选择 AGV → 选择任务类型（取样/投料/转移）→ 确认执行</td></tr>
+      <tr><td>紧急停止 AGV</td><td>点击 AGV 图标 → 选择"紧急停止"→ 确认（AGV 就地制动）</td></tr>
+      <tr><td>充电调度</td><td>电量 &lt; 20% 时系统自动安排充电；也可手动"返回充电桩"</td></tr>
+      <tr><td>路径冲突</td><td>系统自动检测碰撞风险并重新规划路径，无需人工干预</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="sec-control-alarm">3.3 告警与联锁三级分类</h3>
+  <p>告警与联锁页（工艺流程最末位）汇总所有设备的告警事件，支持按级别过滤、批量确认和历史回溯。</p>
+
+  <table>
+    <thead><tr><th>级别</th><th>名称</th><th>触发条件</th><th>响应要求</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-cyan">L1</span></td>
+        <td>提示</td>
+        <td>参数接近限值（&gt;90% 设定值）</td>
+        <td>通知记录，无需立即响应</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-warn">L2</span></td>
+        <td>预警</td>
+        <td>参数超出软限位（黄色区间）</td>
+        <td>30 分钟内工程师确认处置</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-danger">L3</span></td>
+        <td>严重</td>
+        <td>参数超出硬限位 / 设备故障</td>
+        <td>立即联锁，强制人工处置，不可忽略</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Alarm flow SVG (reused from earlier but placed here) -->
+  <div class="svg-container">
+    <svg width="100%" height="110" viewBox="0 0 680 110">
+      <rect x="0"   y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.12)"  stroke="#ff4757" stroke-width="1.5"/>
+      <text x="45"  y="47" fill="#ff4757" font-size="10" text-anchor="middle">超温/超压</text>
+      <text x="45"  y="60" fill="#ff4757" font-size="10" text-anchor="middle">触发报警</text>
+      <rect x="120" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
+      <text x="165" y="47" fill="#ffb800" font-size="10" text-anchor="middle">系统自动</text>
+      <text x="165" y="60" fill="#ffb800" font-size="10" text-anchor="middle">检测确认</text>
+      <rect x="240" y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.10)"  stroke="#ff4757" stroke-width="1.5"/>
+      <text x="285" y="47" fill="#ff4757" font-size="10" text-anchor="middle">联锁触发</text>
+      <text x="285" y="60" fill="#ff4757" font-size="10" text-anchor="middle">自动切断</text>
+      <rect x="360" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
+      <text x="405" y="47" fill="#ffb800" font-size="10" text-anchor="middle">推送通知</text>
+      <text x="405" y="60" fill="#ffb800" font-size="10" text-anchor="middle">短信/铃声</text>
+      <rect x="480" y="25" width="90"  height="50" rx="6" fill="rgba(0,255,136,0.10)"  stroke="#00ff88" stroke-width="1.5"/>
+      <text x="525" y="47" fill="#00ff88" font-size="10" text-anchor="middle">工程师</text>
+      <text x="525" y="60" fill="#00ff88" font-size="10" text-anchor="middle">现场处置</text>
+      <rect x="600" y="25" width="80"  height="50" rx="6" fill="rgba(0,212,255,0.10)"  stroke="#00d4ff" stroke-width="1.5"/>
+      <text x="640" y="47" fill="#00d4ff" font-size="10" text-anchor="middle">恢复生产</text>
+      <text x="640" y="60" fill="#00d4ff" font-size="10" text-anchor="middle">或放弃批次</text>
+      <line x1="90"  y1="50" x2="120" y2="50" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="210" y1="50" x2="240" y2="50" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="330" y1="50" x2="360" y2="50" stroke="#ff4757" stroke-width="1.5"/>
+      <line x1="450" y1="50" x2="480" y2="50" stroke="#ffb800" stroke-width="1.5"/>
+      <line x1="570" y1="50" x2="600" y2="50" stroke="#00ff88" stroke-width="1.5"/>
+    </svg>
+    <div class="svg-title">图 3.3-1 告警联锁响应流程</div>
+  </div>
+</section>
+
+<!-- ═══ 4.1 AI RECOMMENDATION ═══ -->
 <section id="sec-ai" class="section">
-  <h2><span class="h2-num">3.1</span>AI 实验方案推荐</h2>
+  <h2><span class="h2-num">4.1</span>AI 实验方案推荐</h2>
 
   <p>AI 实验方案推荐模块基于 <strong>贝叶斯优化（Bayesian Optimization）</strong> 框架，以高斯过程回归（GPR）为代理模型，持续在实验参数空间中寻找最优催化剂组合。</p>
 
@@ -707,9 +820,9 @@
   </div>
 </section>
 
-<!-- ═══ 3.2 ORCHESTRATION ═══ -->
+<!-- ═══ 4.2 ORCHESTRATION ═══ -->
 <section id="sec-orch" class="section">
-  <h2><span class="h2-num">3.2</span>实验方案编排</h2>
+  <h2><span class="h2-num">4.2</span>实验方案编排</h2>
 
   <p>实验方案编排页提供低代码、拖拽式流程设计画布，基于 <strong>ReactFlow</strong> 实现节点连线逻辑，支持从模板库快速创建实验方案骨架后进行个性化修改。</p>
 
@@ -797,9 +910,9 @@
   </div>
 </section>
 
-<!-- ═══ 3.3 PROCESS MONITOR ═══ -->
+<!-- ═══ 4.3 PROCESS MONITOR ═══ -->
 <section id="sec-monitor" class="section">
-  <h2><span class="h2-num">3.3</span>反应过程实时监控</h2>
+  <h2><span class="h2-num">4.3</span>反应过程实时监控</h2>
 
   <p>反应过程监控页以 1 Hz 频率实时采集并展示反应釜内温度、压力、搅拌转速等关键工艺参数，同步推送在线 GC 色谱分析结果。</p>
 
@@ -867,9 +980,9 @@
   </div>
 </section>
 
-<!-- ═══ 3.4 SPECTRUM ANALYSIS ═══ -->
+<!-- ═══ 4.4 SPECTRUM ANALYSIS ═══ -->
 <section id="sec-analysis" class="section">
-  <h2><span class="h2-num">3.4</span>分析仪器与谱图解读</h2>
+  <h2><span class="h2-num">4.4</span>分析仪器与谱图解读</h2>
 
   <p>CatalystOS 集成茂金属催化剂研发所需的四种核心表征仪器，所有谱图数据自动归档并与对应实验批次关联，支持多批次横向对比。</p>
 
@@ -956,9 +1069,9 @@
   </div>
 </section>
 
-<!-- ═══ 3.5 CATALYST DB ═══ -->
+<!-- ═══ 4.5 CATALYST DB ═══ -->
 <section id="sec-catdb" class="section">
-  <h2><span class="h2-num">3.5</span>催化剂数据库</h2>
+  <h2><span class="h2-num">4.5</span>催化剂数据库</h2>
 
   <p>催化剂数据库收录 <strong>200+ 茂金属催化剂体系</strong>，按中心金属、配体类型、助催化剂、桥连方式分类索引，支持全文搜索与结构相似性检索。</p>
 
@@ -980,9 +1093,9 @@
   </div>
 </section>
 
-<!-- ═══ 3.6 SCHEDULING ═══ -->
+<!-- ═══ 4.6 SCHEDULING ═══ -->
 <section id="sec-scheduling" class="section">
-  <h2><span class="h2-num">3.6</span>高通量智能排产</h2>
+  <h2><span class="h2-num">4.6</span>高通量智能排产</h2>
 
   <p>高通量智能排产模块将实验任务批量分配至各台反应釜，最大化设备利用率，自动处理优先级冲突、资源竞争与清洗窗口。</p>
 
@@ -1004,9 +1117,9 @@
   </table>
 </section>
 
-<!-- ═══ 3.7 ACTIVE LEARNING ═══ -->
+<!-- ═══ 4.7 ACTIVE LEARNING ═══ -->
 <section id="sec-al" class="section">
-  <h2><span class="h2-num">3.7</span>主动学习迭代</h2>
+  <h2><span class="h2-num">4.7</span>主动学习迭代</h2>
 
   <p>主动学习（Active Learning）是 CatalystOS AI 引擎的核心进化机制：每一轮实验的真实表征结果（Mw、PDI、Tm、活性等）自动反哺高斯过程代理模型，下一轮推荐精度随之提升。</p>
 
@@ -1056,119 +1169,6 @@
       <div>✅ <span style="color:var(--sub)">累计实验轮次 ≥ 15 轮</span></div>
       <div>✅ <span style="color:var(--sub)">科学家对推荐结果满意度评分 ≥ 4/5</span></div>
     </div>
-  </div>
-</section>
-
-<!-- ═══ 4. REAL-TIME CONTROL CENTER ═══ -->
-<section id="sec-devices" class="section">
-  <h2><span class="h2-num">4</span>实时控制中心</h2>
-
-  <p>实时控制中心将设备监控与操控功能整合为一体，涵盖从气路准备、进料配制、聚合反应到终止泄压的完整实验流程控制链，并内嵌设备拓扑总览与 AGV 调度。</p>
-
-  <p>左侧导航栏"实时控制中心"组包含以下 7 个页面，按工艺流程顺序排列：</p>
-
-  <table>
-    <thead><tr><th>#</th><th>页面</th><th>核心功能</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td><strong>控制中心总览</strong></td><td>KPI 总览 + 设备拓扑 & 数字孪生 + 32 釜健康矩阵 + 紧急停车</td></tr>
-      <tr><td>2</td><td>气氛与水氧</td><td>H₂O/O₂ 传感器、真空泵、氮气置换控制</td></tr>
-      <tr><td>3</td><td>AGV 调度控制</td><td>实验室机器人实时位置、任务指派、路径规划</td></tr>
-      <tr><td>4</td><td>进料与配制</td><td>注射泵、天平闭环、多位阀、溶剂/催化剂配制</td></tr>
-      <tr><td>5</td><td>聚合反应控制</td><td>MFC 气体流量、TCU 温度 PID、搅拌转速扭矩</td></tr>
-      <tr><td>6</td><td>终止与泄压</td><td>终止剂泵、背压阀、安全泄放操作</td></tr>
-      <tr><td>7</td><td>告警与联锁</td><td>三级告警管理、联锁触发记录、处置确认</td></tr>
-    </tbody>
-  </table>
-
-  <h3 id="sec-control-overview">4.1 控制中心总览 & 设备拓扑</h3>
-  <p>控制中心总览是进入实验室后的核心操控界面，整合了原"设备拓扑总览"的内容，一个页面内完成以下操作：</p>
-
-  <div class="card-grid" style="grid-template-columns:1fr 1fr;">
-    <div class="card">
-      <h4>🖥️ 设备拓扑 & 数字孪生</h4>
-      <p>SVG 实时拓扑图展示 GPC/DSC/NMR/IR 分析仪器状态、数据总线、32 台反应釜 A/B 区节点，以及机械臂和 AGV 停靠点。</p>
-      <p>点击任意反应釜节点，右侧面板实时显示该釜的温度/压力/转速/液位参数，并可直接跳转至聚合反应控制页。</p>
-    </div>
-    <div class="card">
-      <h4>⚙️ 32 釜健康度矩阵</h4>
-      <p>每台反应釜显示 MFC（质量流量）、TCU（温控）、扭矩传感器、阀门四维健康条，一眼识别异常设备。</p>
-      <p>点击釜格直接进入该釜的聚合反应控制页，并同步高亮拓扑图中的对应节点。</p>
-    </div>
-  </div>
-
-  <div class="callout callout-danger">
-    <div class="callout-icon">🛑</div>
-    <div class="callout-body"><strong>紧急停车（EMERGENCY STOP）</strong>控制中心总览右下角常驻红色 E-Stop 按钮。激活后系统立即切断所有进气阀、关闭加热回路、启动冷却保护，界面顶部出现红色告警横幅，所有控制操作被禁用直至人工复位。</div>
-  </div>
-
-  <h3 id="sec-control-agv">4.2 AGV 调度控制</h3>
-  <p>AGV（自动导引车）模块实时展示实验室内 4 台 AGV 机器人的位置、当前任务与电量状态。</p>
-
-  <table>
-    <thead><tr><th>操作</th><th>步骤</th></tr></thead>
-    <tbody>
-      <tr><td>手动指派任务</td><td>在地图上点击目标位置 → 选择 AGV → 选择任务类型（取样/投料/转移）→ 确认执行</td></tr>
-      <tr><td>紧急停止 AGV</td><td>点击 AGV 图标 → 选择"紧急停止"→ 确认（AGV 就地制动）</td></tr>
-      <tr><td>充电调度</td><td>电量 &lt; 20% 时系统自动安排充电；也可手动"返回充电桩"</td></tr>
-      <tr><td>路径冲突</td><td>系统自动检测碰撞风险并重新规划路径，无需人工干预</td></tr>
-    </tbody>
-  </table>
-
-  <h3 id="sec-control-alarm">4.3 告警与联锁三级分类</h3>
-  <p>告警与联锁页（工艺流程最末位）汇总所有设备的告警事件，支持按级别过滤、批量确认和历史回溯。</p>
-
-  <table>
-    <thead><tr><th>级别</th><th>名称</th><th>触发条件</th><th>响应要求</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><span class="badge badge-cyan">L1</span></td>
-        <td>提示</td>
-        <td>参数接近限值（&gt;90% 设定值）</td>
-        <td>通知记录，无需立即响应</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-warn">L2</span></td>
-        <td>预警</td>
-        <td>参数超出软限位（黄色区间）</td>
-        <td>30 分钟内工程师确认处置</td>
-      </tr>
-      <tr>
-        <td><span class="badge badge-danger">L3</span></td>
-        <td>严重</td>
-        <td>参数超出硬限位 / 设备故障</td>
-        <td>立即联锁，强制人工处置，不可忽略</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Alarm flow SVG (reused from earlier but placed here) -->
-  <div class="svg-container">
-    <svg width="100%" height="110" viewBox="0 0 680 110">
-      <rect x="0"   y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.12)"  stroke="#ff4757" stroke-width="1.5"/>
-      <text x="45"  y="47" fill="#ff4757" font-size="10" text-anchor="middle">超温/超压</text>
-      <text x="45"  y="60" fill="#ff4757" font-size="10" text-anchor="middle">触发报警</text>
-      <rect x="120" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
-      <text x="165" y="47" fill="#ffb800" font-size="10" text-anchor="middle">系统自动</text>
-      <text x="165" y="60" fill="#ffb800" font-size="10" text-anchor="middle">检测确认</text>
-      <rect x="240" y="25" width="90"  height="50" rx="6" fill="rgba(255,71,87,0.10)"  stroke="#ff4757" stroke-width="1.5"/>
-      <text x="285" y="47" fill="#ff4757" font-size="10" text-anchor="middle">联锁触发</text>
-      <text x="285" y="60" fill="#ff4757" font-size="10" text-anchor="middle">自动切断</text>
-      <rect x="360" y="25" width="90"  height="50" rx="6" fill="rgba(255,184,0,0.10)"  stroke="#ffb800" stroke-width="1.5"/>
-      <text x="405" y="47" fill="#ffb800" font-size="10" text-anchor="middle">推送通知</text>
-      <text x="405" y="60" fill="#ffb800" font-size="10" text-anchor="middle">短信/铃声</text>
-      <rect x="480" y="25" width="90"  height="50" rx="6" fill="rgba(0,255,136,0.10)"  stroke="#00ff88" stroke-width="1.5"/>
-      <text x="525" y="47" fill="#00ff88" font-size="10" text-anchor="middle">工程师</text>
-      <text x="525" y="60" fill="#00ff88" font-size="10" text-anchor="middle">现场处置</text>
-      <rect x="600" y="25" width="80"  height="50" rx="6" fill="rgba(0,212,255,0.10)"  stroke="#00d4ff" stroke-width="1.5"/>
-      <text x="640" y="47" fill="#00d4ff" font-size="10" text-anchor="middle">恢复生产</text>
-      <text x="640" y="60" fill="#00d4ff" font-size="10" text-anchor="middle">或放弃批次</text>
-      <line x1="90"  y1="50" x2="120" y2="50" stroke="#ff4757" stroke-width="1.5"/>
-      <line x1="210" y1="50" x2="240" y2="50" stroke="#ffb800" stroke-width="1.5"/>
-      <line x1="330" y1="50" x2="360" y2="50" stroke="#ff4757" stroke-width="1.5"/>
-      <line x1="450" y1="50" x2="480" y2="50" stroke="#ffb800" stroke-width="1.5"/>
-      <line x1="570" y1="50" x2="600" y2="50" stroke="#00ff88" stroke-width="1.5"/>
-    </svg>
-    <div class="svg-title">图 4.3-1 告警联锁响应流程</div>
   </div>
 </section>
 
